@@ -1,0 +1,2 @@
+include ':app', ':basediproject'
+rootProject.name='SampleDIProject'

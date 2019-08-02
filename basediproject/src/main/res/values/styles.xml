@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SlideAnim">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="UCROPTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/crop_statusbar_color</item>
+        <item name="colorPrimaryDark">@color/crop_statusbar_color</item>
+        <item name="colorAccent">@color/crop_toolbar_color</item>
+
+    </style>
+
+    <style name="ImagePreviewFullScreen" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/crop_statusbar_color</item>
+        <item name="colorPrimaryDark">@color/crop_statusbar_color</item>
+        <item name="colorAccent">@color/crop_toolbar_color</item>
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowBackground">@android:color/background_dark</item>
+        <!--        <item name="android:statusBarColor">@color/slate_black</item>-->
+    </style>
+</resources>

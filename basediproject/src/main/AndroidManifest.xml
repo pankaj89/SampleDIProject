@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.master.basediproject">
+
+    <application>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UCROPTheme" />
+
+        <activity
+            android:name=".utils.imageviewer.ImagePreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImagePreviewFullScreen" />
+    </application>
+
+</manifest>

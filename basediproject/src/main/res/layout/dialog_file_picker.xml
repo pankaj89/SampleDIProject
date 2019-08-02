@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:minWidth="400dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/file_picker_margin"
+            android:layout_marginBottom="@dimen/file_picker_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/file_picker_margin"
+                android:layout_marginRight="@dimen/file_picker_margin"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:background="@drawable/circle_black"
+                    android:backgroundTint="#FF69B4"
+                    android:padding="@dimen/dp_16"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_menu_camera" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camera" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/file_picker_margin"
+                android:layout_marginEnd="@dimen/file_picker_margin"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+
+                    android:background="@drawable/circle_black"
+                    android:backgroundTint="#999999"
+                    android:padding="@dimen/dp_16"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_menu_gallery" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/file_picker_margin"
+                android:layout_marginLeft="@dimen/file_picker_margin"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:background="@drawable/circle_black"
+                    android:backgroundTint="#228B22"
+                    android:padding="@dimen/dp_16"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_file_white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="File" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
