@@ -16,7 +16,7 @@
 package com.master.samplediproject.di
 
 import com.master.basediproject.dihelpers.ActivityScoped
-import com.master.samplediproject.ui.register.RegisterActivity
+import com.master.samplediproject.ui.MainActivity
 import com.master.samplediproject.ui.register.RegisterModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -35,7 +35,7 @@ abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [RegisterModule::class])
-    internal abstract fun contributeRegisterActivity(): RegisterActivity
+    internal abstract fun contributeMainActivity(): MainActivity
 
 /*  @ActivityScoped
     @ContributesAndroidInjector(modules = [DaggerTestActivity2Module::class, Fragment2Module::class])
