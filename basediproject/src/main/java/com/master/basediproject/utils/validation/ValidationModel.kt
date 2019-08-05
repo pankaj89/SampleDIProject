@@ -10,6 +10,7 @@ data class ValidationModel(
         val mEditText: EditText? = null,
         val mConfirmationEditText: EditText? = null,
         val mTextInputLayout: TextInputLayout? = null,
+        val mConfirmationTextInputLayout: TextInputLayout? = null,
         val mLength: Int? = -1,
         val mPattern: Pattern? = null,
         val mErrMsg: String? = null
