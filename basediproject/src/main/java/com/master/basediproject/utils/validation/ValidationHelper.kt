@@ -90,12 +90,12 @@ class ValidationHelper(anim: Animation) {
     /**
      * Strong and required password check
      */
-    fun addCustomePatterValidation(textInputLayout: TextInputLayout, patternMismatchMsg: String, pattern: Pattern) {
+    fun addCustomePatternValidation(textInputLayout: TextInputLayout, patternMismatchMsg: String, pattern: Pattern) {
         validator.errorRemoveOnChange(textInputLayout)
         validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = patternMismatchMsg, mPattern = pattern))
     }
 
-    fun addCustomePatterValidation(editText: EditText, patternMismatchMsg: String, pattern: Pattern) {
+    fun addCustomePatternValidation(editText: EditText, patternMismatchMsg: String, pattern: Pattern) {
         validator.errorRemoveOnChange(editText)
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = patternMismatchMsg, mPattern = pattern))
     }
