@@ -17,7 +17,11 @@
 package com.master.samplediproject.di
 
 import android.content.Context
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.google.gson.Gson
+import com.master.basediproject.utils.validation.ValidationHelper
+import com.master.samplediproject.R
 import com.master.samplediproject.utils.Pref
 import dagger.Module
 import dagger.Provides
@@ -35,5 +39,13 @@ class AppModule {
     @Singleton
     @Provides
     fun providePref(context: Context, gson: Gson): Pref = Pref(context, gson)
+
+    @Singleton
+    @Provides
+    fun provideValidationHelper(anim: Animation): ValidationHelper = ValidationHelper(anim)
+
+    @Singleton
+    @Provides
+    fun provideAnim(context: Context): Animation = AnimationUtils.loadAnimation(context, R.anim.shake_anim)
 
 }
