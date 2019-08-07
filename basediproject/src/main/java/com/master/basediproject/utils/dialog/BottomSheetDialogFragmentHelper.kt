@@ -18,7 +18,6 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
     companion object {
         fun <B : ViewDataBinding> with(
             layout: Int,
-            isFullScreen: Boolean = false,
             isAnimationRequire: Boolean = true,
             isCancellable: Boolean = true,
             isCancellableOnTouchOutSide: Boolean = true,
@@ -31,7 +30,6 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
                     putInt("RES", layout)
                     putBoolean("IS_CANCELLABLE", isCancellable)
                     putBoolean("IS_CANCELLABLE_ON_TOUCH_OUTSIDE", isCancellableOnTouchOutSide)
-                    putBoolean("IS_FULL_SCREEN", isFullScreen)
                     putBoolean("IS_ANIMATION_REQUIRE", isAnimationRequire)
                 }
             }
@@ -61,8 +59,8 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
 
     override fun onStart() {
         super.onStart()
-        onStartCallback?.invoke(this)
         if (view?.parent != null)
             (view?.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        onStartCallback?.invoke(this)
     }
 }
