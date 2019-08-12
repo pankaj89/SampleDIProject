@@ -127,7 +127,7 @@ class ValidationHelper(anim: Animation) {
      * Strong and required password check
      */
     fun addPasswordValidation(
-        textInputLayout: TextInputLayout, blankPasswordMsg: String, weakPasswordMSg: String,
+        textInputLayout: TextInputLayout, blankPasswordMsg: String, weakPasswordMSg: String = "",
         isRequired: Boolean = true, isStrong: Boolean = false,
         strongPattern: Pattern = STRONG_PASSWORD_CHECK
     ) {
@@ -239,34 +239,38 @@ class ValidationHelper(anim: Animation) {
         validationList.clear()
     }
 
-    fun validateAll() {
+    fun validateAll(): Boolean {
         if (validationList.isNotEmpty()) {
             validationList.forEach {
                 if (it.mEditText == null) {
                     if (it.mPattern == null) {
                         if (it.mConfirmationTextInputLayout != null) {
-                            if (!validator.validateTextInputConfirmPassword(it)) return
+                            if (!validator.validateTextInputConfirmPassword(it)) return false
                         } else {
-                            if (!validator.validateTextInputRequired(it)) return
+                            if (!validator.validateTextInputRequired(it)) return false
                         }
                     } else {
-                        if (!validator.validateTextInputPattern(it)) return
+                        if (!validator.validateTextInputPattern(it)) return false
                     }
+
                 } else {
                     if (it.mPattern == null) {
                         if (it.mConfirmationTextInputLayout != null) {
-                            if (!validator.validateEditTextConfirmPassword(it)) return
+                            if (!validator.validateEditTextConfirmPassword(it)) return false
                         } else {
-                            if (!validator.validateEditTextRequired(it)) return
+                            if (!validator.validateEditTextRequired(it)) return false
                         }
                     } else {
-                        if (!validator.validateEditTextPattern(it)) return
+                        if (!validator.validateEditTextPattern(it)) return false
                     }
+
                 }
             }
         } else {
             throw IllegalArgumentException("Please add atleast one validations in validation list to call validateAll method")
         }
+
+        return true
     }
 
 
