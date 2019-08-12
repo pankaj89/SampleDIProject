@@ -79,19 +79,19 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
             val type = arguments?.getInt("IS_FULL_SCREEN", FULL_WIDTH) ?: FULL_WIDTH
             when (type) {
                 FULL_WIDTH -> {
-                    dialog.window?.setLayout(
+                    dialog?.window?.setLayout(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                     )
                 }
                 FULL_HEIGHT -> {
-                    dialog.window?.setLayout(
+                    dialog?.window?.setLayout(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                 }
                 FULL_WIDTH_HEIGHT -> {
-                    dialog.window?.setLayout(
+                    dialog?.window?.setLayout(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
@@ -100,7 +100,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
         }
 
         if (arguments?.getBoolean("IS_ANIMATION_REQUIRE") == true) {
-            dialog.window?.setWindowAnimations(R.style.SlideAnim)
+            dialog?.window?.setWindowAnimations(R.style.SlideAnim)
         }
 
         if (view?.parent != null)
