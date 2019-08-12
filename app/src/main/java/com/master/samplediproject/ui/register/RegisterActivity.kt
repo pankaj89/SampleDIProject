@@ -10,6 +10,7 @@ import com.master.basediproject.extensions.viewModelProvider
 import com.master.basediproject.utils.MediaPicker
 import com.master.basediproject.utils.imageviewer.ImagePreviewActivity
 import com.master.samplediproject.R
+import com.master.samplediproject.utils.DialogSpinner
 import com.master.samplediproject.utils.Pref
 import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.Observable
@@ -58,6 +59,10 @@ class RegisterActivity : DaggerAppCompatActivity() {
         btnRegister.setOnClickListener {
             if (path?.isNotBlank() == true)
                 ImagePreviewActivity.getIntent(this, path).startActivity(this)
+
+            DialogSpinner.with(this, arrayListOf<String>("India","Pakistan","Australia")).setEnableSearch(true).setMap { value: String -> "" + value}.setOnValueSelectedCallback { model ->
+            }.build().show(supportFragmentManager)
+
         }
 
 //        registerViewModel.callWS()
