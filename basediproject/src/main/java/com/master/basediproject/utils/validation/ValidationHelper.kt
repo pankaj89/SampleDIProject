@@ -9,95 +9,229 @@ import java.util.regex.Pattern
 class ValidationHelper(anim: Animation) {
 
     private val validator by lazy { Validator(anim) }
-    private val validationList: ArrayList<ValidationModel> =  ArrayList()
+    private val validationList: ArrayList<ValidationModel> = ArrayList()
+
+    /**
+     * Simple field required Validation
+     */
+    fun addRequiredValidation(textInputLayout: TextInputLayout, blankEmailMsg: String) {
+        validator.errorRemoveOnChange(textInputLayout)
+        validationList.add(
+            ValidationModel(
+                mTextInputLayout = textInputLayout,
+                mErrMsg = blankEmailMsg
+            )
+        )
+    }
+
+    fun addRequiredValidation(editText: EditText, blankEmailMsg: String) {
+        validator.errorRemoveOnChange(editText)
+        validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
+    }
+
 
     /**
      * Email Address Validation
      */
-    fun addEmailValidation(textInputLayout: TextInputLayout, blankEmailMsg: String, invalidEmailMsg: String, isRequired: Boolean = true) {
+    fun addEmailValidation(
+        textInputLayout: TextInputLayout,
+        blankEmailMsg: String,
+        invalidEmailMsg: String,
+        isRequired: Boolean = true
+    ) {
         validator.errorRemoveOnChange(textInputLayout)
         if (isRequired) {
-            validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = blankEmailMsg))
+            validationList.add(
+                ValidationModel(
+                    mTextInputLayout = textInputLayout,
+                    mErrMsg = blankEmailMsg
+                )
+            )
         }
-        validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = invalidEmailMsg, mPattern = EMAIL_ADDRESS))
+        validationList.add(
+            ValidationModel(
+                mTextInputLayout = textInputLayout,
+                mErrMsg = invalidEmailMsg,
+                mPattern = EMAIL_ADDRESS
+            )
+        )
     }
 
-    fun addEmailValidation(editText: EditText, blankEmailMsg: String, invalidEmailMsg: String, isRequired: Boolean = true) {
+    fun addEmailValidation(
+        editText: EditText,
+        blankEmailMsg: String,
+        invalidEmailMsg: String,
+        isRequired: Boolean = true
+    ) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
         }
-        validationList.add(ValidationModel(mEditText = editText, mErrMsg = invalidEmailMsg, mPattern = EMAIL_ADDRESS))
+        validationList.add(
+            ValidationModel(
+                mEditText = editText,
+                mErrMsg = invalidEmailMsg,
+                mPattern = EMAIL_ADDRESS
+            )
+        )
     }
 
 
     /**
      * Mobile number Validation
      */
-    fun addMobileValidation(textInputLayout: TextInputLayout, blankEmailMsg: String, invalidEmailMsg: String, isRequired: Boolean = true) {
+    fun addMobileValidation(
+        textInputLayout: TextInputLayout,
+        blankEmailMsg: String,
+        invalidEmailMsg: String,
+        isRequired: Boolean = true
+    ) {
         validator.errorRemoveOnChange(textInputLayout)
         if (isRequired) {
-            validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = blankEmailMsg))
+            validationList.add(
+                ValidationModel(
+                    mTextInputLayout = textInputLayout,
+                    mErrMsg = blankEmailMsg
+                )
+            )
         }
-        validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = invalidEmailMsg, mPattern = MOBILE))
+        validationList.add(
+            ValidationModel(
+                mTextInputLayout = textInputLayout,
+                mErrMsg = invalidEmailMsg,
+                mPattern = MOBILE
+            )
+        )
     }
 
-    fun addMobileValidation(editText: EditText, blankEmailMsg: String, invalidEmailMsg: String, isRequired: Boolean = true) {
+    fun addMobileValidation(
+        editText: EditText,
+        blankEmailMsg: String,
+        invalidEmailMsg: String,
+        isRequired: Boolean = true
+    ) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
         }
-        validationList.add(ValidationModel(mEditText = editText, mErrMsg = invalidEmailMsg, mPattern = MOBILE))
+        validationList.add(
+            ValidationModel(
+                mEditText = editText,
+                mErrMsg = invalidEmailMsg,
+                mPattern = MOBILE
+            )
+        )
     }
 
     /**
      * Strong and required password check
      */
-    fun addPasswordValidation(textInputLayout: TextInputLayout, blankPasswordMsg: String, weakPasswordMSg: String,
-                              isRequired: Boolean = true, isStrong: Boolean = false,
-                              strongPattern: Pattern = STRONG_PASSWORD_CHECK) {
+    fun addPasswordValidation(
+        textInputLayout: TextInputLayout, blankPasswordMsg: String, weakPasswordMSg: String,
+        isRequired: Boolean = true, isStrong: Boolean = false,
+        strongPattern: Pattern = STRONG_PASSWORD_CHECK
+    ) {
         validator.errorRemoveOnChange(textInputLayout)
         if (isRequired)
-            validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = blankPasswordMsg))
+            validationList.add(
+                ValidationModel(
+                    mTextInputLayout = textInputLayout,
+                    mErrMsg = blankPasswordMsg
+                )
+            )
         if (isStrong)
-            validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = weakPasswordMSg, mPattern = strongPattern))
+            validationList.add(
+                ValidationModel(
+                    mTextInputLayout = textInputLayout,
+                    mErrMsg = weakPasswordMSg,
+                    mPattern = strongPattern
+                )
+            )
     }
 
-    fun addPasswordValidation(editText: EditText, blankPasswordMsg: String, weakPasswordMSg: String,
-                              isRequired: Boolean = true, isStrong: Boolean = false,
-                              strongPattern: Pattern = STRONG_PASSWORD_CHECK) {
+    fun addPasswordValidation(
+        editText: EditText, blankPasswordMsg: String, weakPasswordMSg: String,
+        isRequired: Boolean = true, isStrong: Boolean = false,
+        strongPattern: Pattern = STRONG_PASSWORD_CHECK
+    ) {
         validator.errorRemoveOnChange(editText)
         if (isRequired)
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankPasswordMsg))
         if (isStrong)
-            validationList.add(ValidationModel(mEditText = editText, mErrMsg = weakPasswordMSg, mPattern = strongPattern))
+            validationList.add(
+                ValidationModel(
+                    mEditText = editText,
+                    mErrMsg = weakPasswordMSg,
+                    mPattern = strongPattern
+                )
+            )
     }
 
     /**
      * Confirm password Validation
      */
-    fun addConfirmPasswordValidation(textInputLayout: TextInputLayout, confirmTextInputLayout: TextInputLayout, mismatchPasswordMsg: String = "") {
+    fun addConfirmPasswordValidation(
+        textInputLayout: TextInputLayout,
+        confirmTextInputLayout: TextInputLayout,
+        mismatchPasswordMsg: String = ""
+    ) {
         validator.errorRemoveOnChange(textInputLayout)
-        validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mConfirmationTextInputLayout = confirmTextInputLayout, mErrMsg = mismatchPasswordMsg))
+        validationList.add(
+            ValidationModel(
+                mTextInputLayout = textInputLayout,
+                mConfirmationTextInputLayout = confirmTextInputLayout,
+                mErrMsg = mismatchPasswordMsg
+            )
+        )
     }
 
-    fun addConfirmPasswordValidation(editText: EditText, confirmEditText: EditText, mismatchPasswordMsg: String) {
+    fun addConfirmPasswordValidation(
+        editText: EditText,
+        confirmEditText: EditText,
+        mismatchPasswordMsg: String
+    ) {
         validator.errorRemoveOnChange(editText)
-        validationList.add(ValidationModel(mEditText = editText, mConfirmationEditText = confirmEditText, mErrMsg = mismatchPasswordMsg))
+        validationList.add(
+            ValidationModel(
+                mEditText = editText,
+                mConfirmationEditText = confirmEditText,
+                mErrMsg = mismatchPasswordMsg
+            )
+        )
     }
 
 
     /**
      * Strong and required password check
      */
-    fun addCustomePatternValidation(textInputLayout: TextInputLayout, patternMismatchMsg: String, pattern: Pattern) {
+    fun addCustomePatternValidation(
+        textInputLayout: TextInputLayout,
+        patternMismatchMsg: String,
+        pattern: Pattern
+    ) {
         validator.errorRemoveOnChange(textInputLayout)
-        validationList.add(ValidationModel(mTextInputLayout = textInputLayout, mErrMsg = patternMismatchMsg, mPattern = pattern))
+        validationList.add(
+            ValidationModel(
+                mTextInputLayout = textInputLayout,
+                mErrMsg = patternMismatchMsg,
+                mPattern = pattern
+            )
+        )
     }
 
-    fun addCustomePatternValidation(editText: EditText, patternMismatchMsg: String, pattern: Pattern) {
+    fun addCustomePatternValidation(
+        editText: EditText,
+        patternMismatchMsg: String,
+        pattern: Pattern
+    ) {
         validator.errorRemoveOnChange(editText)
-        validationList.add(ValidationModel(mEditText = editText, mErrMsg = patternMismatchMsg, mPattern = pattern))
+        validationList.add(
+            ValidationModel(
+                mEditText = editText,
+                mErrMsg = patternMismatchMsg,
+                mPattern = pattern
+            )
+        )
     }
 
 
@@ -137,22 +271,22 @@ class ValidationHelper(anim: Animation) {
 
 
     companion object {
-        val EMAIL_ADDRESS = Pattern.compile(
-                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                        "\\@" +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                        "(" +
-                        "\\." +
-                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                        ")+"
+        val EMAIL_ADDRESS: Pattern = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
         )
 
-        val MOBILE = Pattern.compile(
-                "^[6-9]\\d{9}\$"
+        val MOBILE: Pattern = Pattern.compile(
+            "^[6-9]\\d{9}\$"
         )
 
-        val STRONG_PASSWORD_CHECK = Pattern.compile(
-                "((?=.*\\d)(?=.*[A-Z])(?=.*[!@#\$&^%*]).{6,})"
+        val STRONG_PASSWORD_CHECK: Pattern = Pattern.compile(
+            "((?=.*\\d)(?=.*[A-Z])(?=.*[!@#\$&^%*]).{6,})"
         )
     }
 }
