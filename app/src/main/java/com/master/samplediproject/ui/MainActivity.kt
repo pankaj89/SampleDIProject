@@ -5,6 +5,7 @@ import com.master.basediproject.utils.validation.ValidationHelper
 import com.master.samplediproject.R
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -20,6 +21,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         button.setOnClickListener {
             validationHelper.validateAll()
+            Timber.i("sdfsdf")
         }
     }
 

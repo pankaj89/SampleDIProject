@@ -2,7 +2,6 @@ package com.master.samplediproject.ui.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import com.master.basediproject.dihelpers.DIViewModelFactory
 import com.master.basediproject.extensions.loadImage
 import com.master.basediproject.extensions.startActivity
@@ -13,14 +12,8 @@ import com.master.samplediproject.R
 import com.master.samplediproject.utils.DialogSpinner
 import com.master.samplediproject.utils.Pref
 import dagger.android.support.DaggerAppCompatActivity
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_register.*
 import timber.log.Timber
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RegisterActivity : DaggerAppCompatActivity() {
@@ -39,7 +32,7 @@ class RegisterActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val list= arrayListOf<String>("Pankaj", "Prashant", "Punit", "Priya")
+        val list = arrayListOf<String>("Pankaj", "Prashant", "Punit", "Priya")
         Timber.i("List ${list.sortBy { it }}")
 
         mediapicker = MediaPicker(
@@ -60,17 +53,25 @@ class RegisterActivity : DaggerAppCompatActivity() {
             if (path?.isNotBlank() == true)
                 ImagePreviewActivity.getIntent(this, path).startActivity(this)
 
-            DialogSpinner.with(this, arrayListOf<String>("India","Pakistan","Australia")).setEnableSearch(true).setMap { value: String -> "" + value}.setOnValueSelectedCallback { model ->
-            }.build().show(supportFragmentManager)
+            DialogSpinner.with(this, arrayListOf<String>("India", "Pakistan", "Australia"))
+                .setEnableSearch(true).setMap { value: String -> "" + value }
+                .setOnValueSelectedCallback { model ->
+                }.build().show(supportFragmentManager)
 
         }
 
+        supportFragmentManager.beginTransaction().replace(R.id.container, RegisterFragment())
+            .commit()
 //        registerViewModel.callWS()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mediapicker.onActivityResult(requestCode, resultCode, data)
+//        mediapicker.onActivityResult(requestCode, resultCode, data)
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -79,6 +80,6 @@ class RegisterActivity : DaggerAppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        mediapicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        mediapicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

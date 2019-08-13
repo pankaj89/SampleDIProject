@@ -50,7 +50,7 @@ class MediaPicker(
     var permissionHelper: PermissionHelper? = null
     public fun start(onMediaChoose: (path: String) -> Unit) {
         this.onMediaChoose = onMediaChoose
-        if (activity != null) {
+        if (activity != null || fragment != null) {
             BottomSheetDialogFragmentHelper.with<DialogFilePickerBinding>(
                 R.layout.dialog_file_picker,
                 isCancellable = true,
@@ -96,9 +96,12 @@ class MediaPicker(
                     dialog.dismiss()
                 }
 
-            }.show(activity?.supportFragmentManager!!, "filepicker")
+            }.show(
+                if (activity != null) activity.supportFragmentManager else fragment!!.childFragmentManager,
+                "filepicker"
+            )
         } else {
-//            throw RuntimeException("It Seems activity is not set")
+            throw RuntimeException("It Seems activity is not set")
         }
     }
 
@@ -110,10 +113,11 @@ class MediaPicker(
 
         permissionHelper?.requestAll {
 
+            val tempActivity = activity ?: fragment?.activity
             when (type) {
                 ACTION_TYPE_CAMERA -> {
                     if (mediaType == MEDIA_TYPE_IMAGE) {
-                        ImagePicker.Builder(activity)
+                        ImagePicker.Builder(tempActivity)
                             .mode(ImagePicker.Mode.CAMERA)
                             .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
                             .directory(ImagePicker.Directory.DEFAULT)
@@ -123,7 +127,7 @@ class MediaPicker(
                             .enableDebuggingMode(true)
                             .build()
                     } else if (mediaType == MEDIA_TYPE_VIDEO) {
-                        VideoPicker.Builder(activity)
+                        VideoPicker.Builder(tempActivity)
                             .mode(VideoPicker.Mode.CAMERA)
                             .directory(VideoPicker.Directory.DEFAULT)
                             .extension(VideoPicker.Extension.MP4)
@@ -133,7 +137,7 @@ class MediaPicker(
                 }
                 ACTION_TYPE_GALLERY -> {
                     if (mediaType == MEDIA_TYPE_IMAGE) {
-                        ImagePicker.Builder(activity)
+                        ImagePicker.Builder(tempActivity)
                             .mode(ImagePicker.Mode.GALLERY)
                             .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
                             .directory(ImagePicker.Directory.DEFAULT)
@@ -143,7 +147,7 @@ class MediaPicker(
                             .enableDebuggingMode(true)
                             .build()
                     } else if (mediaType == MEDIA_TYPE_VIDEO) {
-                        VideoPicker.Builder(activity)
+                        VideoPicker.Builder(tempActivity)
                             .mode(VideoPicker.Mode.GALLERY)
                             .directory(VideoPicker.Directory.DEFAULT)
                             .extension(VideoPicker.Extension.MP4)
@@ -160,7 +164,9 @@ class MediaPicker(
                     } else {
                         intent.setType("*/*")
                     }
-                    activity!!.startActivityForResult(intent, 7)
+                    if (activity != null)
+                        activity.startActivityForResult(intent, 7)
+                    else fragment?.startActivityForResult(intent, 7)
                 }
             }
         }
@@ -189,22 +195,36 @@ class MediaPicker(
                         )
                         options.setToolbarColor(
                             ContextCompat.getColor(
-                                activity!!,
+                                activity?:fragment?.requireContext()!!,
                                 R.color.crop_toolbar_color
                             )
                         )
                         options.setStatusBarColor(
                             ContextCompat.getColor(
-                                activity!!,
+                                activity?:fragment?.requireContext()!!,
                                 R.color.crop_statusbar_color
                             )
                         )
                         options.setHideBottomControls(true)
 
-                        UCrop.of(
-                            Uri.fromFile(File(it)),
-                            Uri.fromFile(destinationFile)
-                        ).withOptions(options).withAspectRatio(1f, 1f).start(activity!!)
+                        if (activity != null) {
+                            activity.startActivityForResult(
+                                UCrop.of(
+                                    Uri.fromFile(File(it)),
+                                    Uri.fromFile(destinationFile)
+                                ).withOptions(options).withAspectRatio(1f, 1f).getIntent(activity)
+                            ,UCrop.REQUEST_CROP)
+                        } else {
+                            fragment?.startActivityForResult(
+                                UCrop.of(
+                                    Uri.fromFile(File(it)),
+                                    Uri.fromFile(destinationFile)
+                                ).withOptions(options).withAspectRatio(
+                                    1f,
+                                    1f
+                                ).getIntent(fragment.context!!)
+                            ,UCrop.REQUEST_CROP)
+                        }
                     } else {
 //                        addNewItem(it, TYPE_GALLERY)
                         onMediaChoose(it)
