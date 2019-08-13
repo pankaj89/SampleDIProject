@@ -97,7 +97,7 @@ public class ImagePreviewActivity extends AppCompatActivity implements OnItemCli
 
         vPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
-            public void transformPage( View page, float position) {
+            public void transformPage(View page, float position) {
                 float normalizedPosition = Math.abs(Math.abs(position) - 1);
                 page.setScaleX(normalizedPosition / 2 + 0.5f);
                 page.setScaleY(normalizedPosition / 2 + 0.5f);

@@ -192,7 +192,7 @@ class MediaPicker(
                         .requestCode(customRequestCode * VIDEO_PICKER_REQUEST_CODE)
                         .build()
                 }
-                ACTION_TYPE_FILE -> {
+                R.id.llFile -> {
                     val intent = Intent(Intent.ACTION_GET_CONTENT)
                     if (mediaType == MEDIA_TYPE_IMAGE) {
                         intent.setType("image/*")
@@ -299,10 +299,10 @@ class MediaPicker(
             if (_uri != null && "content" == _uri.getScheme()) {
                 val cursor = activity!!.getContentResolver().query(_uri, null, null, null, null)
                 cursor.moveToFirst()
-                filePath = cursor.getString(0)
+                filePath = cursor.getString(0)?:""
                 cursor.close()
             } else {
-                filePath = _uri.getPath()
+                filePath = _uri.getPath()?:""
             }
 //            Log.d("", "Chosen path = " + filePath)
 

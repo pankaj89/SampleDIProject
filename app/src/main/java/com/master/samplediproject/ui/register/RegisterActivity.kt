@@ -38,7 +38,7 @@ class RegisterActivity : DaggerAppCompatActivity() {
         mediapicker = MediaPicker(
             activity = this@RegisterActivity,
             requiresCrop = true,
-            mediaType = MediaPicker.MEDIA_TYPE_IMAGE or MediaPicker.MEDIA_TYPE_VIDEO,
+            mediaType = MediaPicker.MEDIA_TYPE_IMAGE or MediaPicker.MEDIA_TYPE_OTHER,
             action = MediaPicker.ACTION_TYPE_GALLERY or MediaPicker.ACTION_TYPE_CAMERA or MediaPicker.ACTION_TYPE_FILE
         )
 
