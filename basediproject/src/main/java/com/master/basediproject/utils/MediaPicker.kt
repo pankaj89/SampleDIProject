@@ -25,13 +25,18 @@ class MediaPicker(
     val fragment: Fragment? = null,
     val requiresCrop: Boolean = true,
     val mediaType: Int,
-    val action: Int
+    val action: Int,
+    val customRequestCode: Int = 123
 ) {
     lateinit var filePaths: FilePaths
 
     init {
         filePaths = FilePaths(if (fragment != null) fragment.context!! else activity as Context)
     }
+
+    private val IMAGE_PICKER_REQUEST_CODE = 1
+    private val VIDEO_PICKER_REQUEST_CODE = 2
+    private val FILE_PICKER_REQUEST_CODE = 3
 
     companion object {
 
@@ -45,7 +50,7 @@ class MediaPicker(
 
     }
 
-    var onMediaChoose: (path: String, mediaType: Int) -> Unit = {path, mediaType ->  }
+    var onMediaChoose: (path: String, mediaType: Int) -> Unit = { path, mediaType -> }
 
     var permissionHelper: PermissionHelper? = null
     public fun start(onMediaChoose: (path: String, mediaType: Int) -> Unit) {
@@ -154,6 +159,7 @@ class MediaPicker(
                         .scale(600, 600)
                         .allowMultipleImages(false)
                         .enableDebuggingMode(true)
+                        .requestCode(customRequestCode * IMAGE_PICKER_REQUEST_CODE)
                         .build()
                 }
                 R.id.llImageGallery -> {
@@ -165,6 +171,7 @@ class MediaPicker(
                         .scale(600, 600)
                         .allowMultipleImages(false)
                         .enableDebuggingMode(true)
+                        .requestCode(customRequestCode * IMAGE_PICKER_REQUEST_CODE)
                         .build()
                 }
                 R.id.llVideoCamera -> {
@@ -173,6 +180,7 @@ class MediaPicker(
                         .directory(VideoPicker.Directory.DEFAULT)
                         .extension(VideoPicker.Extension.MP4)
                         .enableDebuggingMode(true)
+                        .requestCode(customRequestCode * VIDEO_PICKER_REQUEST_CODE)
                         .build()
                 }
                 R.id.llVideoGallery -> {
@@ -181,6 +189,7 @@ class MediaPicker(
                         .directory(VideoPicker.Directory.DEFAULT)
                         .extension(VideoPicker.Extension.MP4)
                         .enableDebuggingMode(true)
+                        .requestCode(customRequestCode * VIDEO_PICKER_REQUEST_CODE)
                         .build()
                 }
                 ACTION_TYPE_FILE -> {
@@ -193,15 +202,21 @@ class MediaPicker(
                         intent.setType("*/*")
                     }
                     if (activity != null)
-                        activity.startActivityForResult(intent, 7)
-                    else fragment?.startActivityForResult(intent, 7)
+                        activity.startActivityForResult(
+                            intent,
+                            customRequestCode * FILE_PICKER_REQUEST_CODE
+                        )
+                    else fragment?.startActivityForResult(
+                        intent,
+                        customRequestCode * FILE_PICKER_REQUEST_CODE
+                    )
                 }
             }
         }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == customRequestCode * IMAGE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val mPaths =
                 data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
             if (mPaths != null) {
@@ -261,7 +276,7 @@ class MediaPicker(
                     }
                 }
             }
-        } else if (requestCode == VideoPicker.VIDEO_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == customRequestCode * VIDEO_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val mPaths =
                 data?.getSerializableExtra(VideoPicker.EXTRA_VIDEO_PATH) as ArrayList<String>
             if (mPaths != null) {
@@ -275,12 +290,12 @@ class MediaPicker(
             val imagePath = resultUri?.path ?: ""
 //            addNewItem(imagePath, TYPE_GALLERY)
             onMediaChoose(imagePath, MEDIA_TYPE_IMAGE)
-        } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 7 && data != null) {
+        } else if (requestCode == customRequestCode * FILE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val pathHolder = data.getData().getPath()
 
             var filePath: String = ""
             val _uri = data.getData()
-            Log.d("", "URI = " + _uri)
+//            Log.d("", "URI = " + _uri)
             if (_uri != null && "content" == _uri.getScheme()) {
                 val cursor = activity!!.getContentResolver().query(_uri, null, null, null, null)
                 cursor.moveToFirst()
@@ -289,7 +304,7 @@ class MediaPicker(
             } else {
                 filePath = _uri.getPath()
             }
-            Log.d("", "Chosen path = " + filePath)
+//            Log.d("", "Chosen path = " + filePath)
 
 //            pathHolder.showSnackBar(activity)
 //            addNewItem(filePath, TYPE_FILE)
