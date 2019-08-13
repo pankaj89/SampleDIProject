@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -35,8 +34,9 @@ class MediaPicker(
     }
 
     private val IMAGE_PICKER_REQUEST_CODE = 1
-    private val VIDEO_PICKER_REQUEST_CODE = 2
-    private val FILE_PICKER_REQUEST_CODE = 3
+    private val IMAGE_CROP_REQUEST_CODE = 2
+    private val VIDEO_PICKER_REQUEST_CODE = 3
+    private val FILE_PICKER_REQUEST_CODE = 4
 
     companion object {
 
@@ -256,7 +256,7 @@ class MediaPicker(
                                     Uri.fromFile(File(it)),
                                     Uri.fromFile(destinationFile)
                                 ).withOptions(options).withAspectRatio(1f, 1f).getIntent(activity)
-                                , UCrop.REQUEST_CROP
+                                , customRequestCode * IMAGE_CROP_REQUEST_CODE
                             )
                         } else {
                             fragment?.startActivityForResult(
@@ -267,7 +267,7 @@ class MediaPicker(
                                     1f,
                                     1f
                                 ).getIntent(fragment.context!!)
-                                , UCrop.REQUEST_CROP
+                                , customRequestCode * IMAGE_CROP_REQUEST_CODE
                             )
                         }
                     } else {
@@ -285,7 +285,7 @@ class MediaPicker(
                     onMediaChoose(it, MEDIA_TYPE_VIDEO)
                 }
             }
-        } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == UCrop.REQUEST_CROP && data != null) {
+        } else if (requestCode == customRequestCode * IMAGE_CROP_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val resultUri = UCrop.getOutput(data)
             val imagePath = resultUri?.path ?: ""
 //            addNewItem(imagePath, TYPE_GALLERY)
