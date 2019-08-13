@@ -45,10 +45,10 @@ class MediaPicker(
 
     }
 
-    var onMediaChoose: (path: String) -> Unit = {}
+    var onMediaChoose: (path: String, mediaType: Int) -> Unit = {path, mediaType ->  }
 
     var permissionHelper: PermissionHelper? = null
-    public fun start(onMediaChoose: (path: String) -> Unit) {
+    public fun start(onMediaChoose: (path: String, mediaType: Int) -> Unit) {
         this.onMediaChoose = onMediaChoose
         if (activity != null || fragment != null) {
             BottomSheetDialogFragmentHelper.with<DialogFilePickerBinding>(
@@ -57,23 +57,35 @@ class MediaPicker(
                 isCancellableOnTouchOutSide = true
             ) { it, dialog ->
 
-                it.llCamera.visibility = View.GONE
-                it.llGallery.visibility = View.GONE
+                it.llImageCamera.visibility = View.GONE
+                it.llImageGallery.visibility = View.GONE
+                it.llVideoCamera.visibility = View.GONE
+                it.llVideoGallery.visibility = View.GONE
                 it.llFile.visibility = View.GONE
 
                 if (action and ACTION_TYPE_CAMERA == ACTION_TYPE_CAMERA) {
-                    it.llCamera.visibility = View.VISIBLE
+                    if (mediaType and MEDIA_TYPE_IMAGE == MEDIA_TYPE_IMAGE) {
+                        it.llImageCamera.visibility = View.VISIBLE
+                    }
+                    if (mediaType and MEDIA_TYPE_VIDEO == MEDIA_TYPE_VIDEO) {
+                        it.llVideoCamera.visibility = View.VISIBLE
+                    }
                 }
                 if (action and ACTION_TYPE_GALLERY == ACTION_TYPE_GALLERY) {
-                    it.llGallery.visibility = View.VISIBLE
+                    if (mediaType and MEDIA_TYPE_IMAGE == MEDIA_TYPE_IMAGE) {
+                        it.llImageGallery.visibility = View.VISIBLE
+                    }
+                    if (mediaType and MEDIA_TYPE_VIDEO == MEDIA_TYPE_VIDEO) {
+                        it.llVideoGallery.visibility = View.VISIBLE
+                    }
                 }
                 if (action and ACTION_TYPE_FILE == ACTION_TYPE_FILE) {
                     it.llFile.visibility = View.VISIBLE
                 }
 
-                it.llCamera.setOnClickListener {
+                it.llImageCamera.setOnClickListener {
                     requestPermission(
-                        ACTION_TYPE_CAMERA,
+                        it.id,
                         arrayOf(
                             Manifest.permission.CAMERA,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -81,16 +93,33 @@ class MediaPicker(
                     )
                     dialog.dismiss()
                 }
-                it.llGallery.setOnClickListener {
+                it.llImageGallery.setOnClickListener {
                     requestPermission(
-                        ACTION_TYPE_GALLERY,
+                        it.id,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    )
+                    dialog.dismiss()
+                }
+                it.llVideoCamera.setOnClickListener {
+                    requestPermission(
+                        it.id,
+                        arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    )
+                    dialog.dismiss()
+                }
+                it.llVideoGallery.setOnClickListener {
+                    requestPermission(
+                        it.id,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     )
                     dialog.dismiss()
                 }
                 it.llFile.setOnClickListener {
                     requestPermission(
-                        ACTION_TYPE_FILE,
+                        it.id,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     )
                     dialog.dismiss()
@@ -105,7 +134,7 @@ class MediaPicker(
         }
     }
 
-    fun requestPermission(type: Int, permission: Array<String>) {
+    fun requestPermission(resourceId: Int, permission: Array<String>) {
         if (fragment != null)
             permissionHelper = PermissionHelper(fragment, permissions = permission)
         else if (activity != null)
@@ -114,46 +143,45 @@ class MediaPicker(
         permissionHelper?.requestAll {
 
             val tempActivity = activity ?: fragment?.activity
-            when (type) {
-                ACTION_TYPE_CAMERA -> {
-                    if (mediaType == MEDIA_TYPE_IMAGE) {
-                        ImagePicker.Builder(tempActivity)
-                            .mode(ImagePicker.Mode.CAMERA)
-                            .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
-                            .directory(ImagePicker.Directory.DEFAULT)
-                            .extension(ImagePicker.Extension.JPG)
-                            .scale(600, 600)
-                            .allowMultipleImages(false)
-                            .enableDebuggingMode(true)
-                            .build()
-                    } else if (mediaType == MEDIA_TYPE_VIDEO) {
-                        VideoPicker.Builder(tempActivity)
-                            .mode(VideoPicker.Mode.CAMERA)
-                            .directory(VideoPicker.Directory.DEFAULT)
-                            .extension(VideoPicker.Extension.MP4)
-                            .enableDebuggingMode(true)
-                            .build()
-                    }
+            when (resourceId) {
+                R.id.llImageCamera -> {
+
+                    ImagePicker.Builder(tempActivity)
+                        .mode(ImagePicker.Mode.CAMERA)
+                        .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                        .directory(ImagePicker.Directory.DEFAULT)
+                        .extension(ImagePicker.Extension.JPG)
+                        .scale(600, 600)
+                        .allowMultipleImages(false)
+                        .enableDebuggingMode(true)
+                        .build()
                 }
-                ACTION_TYPE_GALLERY -> {
-                    if (mediaType == MEDIA_TYPE_IMAGE) {
-                        ImagePicker.Builder(tempActivity)
-                            .mode(ImagePicker.Mode.GALLERY)
-                            .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
-                            .directory(ImagePicker.Directory.DEFAULT)
-                            .extension(ImagePicker.Extension.JPG)
-                            .scale(600, 600)
-                            .allowMultipleImages(false)
-                            .enableDebuggingMode(true)
-                            .build()
-                    } else if (mediaType == MEDIA_TYPE_VIDEO) {
-                        VideoPicker.Builder(tempActivity)
-                            .mode(VideoPicker.Mode.GALLERY)
-                            .directory(VideoPicker.Directory.DEFAULT)
-                            .extension(VideoPicker.Extension.MP4)
-                            .enableDebuggingMode(true)
-                            .build()
-                    }
+                R.id.llImageGallery -> {
+                    ImagePicker.Builder(tempActivity)
+                        .mode(ImagePicker.Mode.GALLERY)
+                        .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                        .directory(ImagePicker.Directory.DEFAULT)
+                        .extension(ImagePicker.Extension.JPG)
+                        .scale(600, 600)
+                        .allowMultipleImages(false)
+                        .enableDebuggingMode(true)
+                        .build()
+                }
+                R.id.llVideoCamera -> {
+                    VideoPicker.Builder(tempActivity)
+                        .mode(VideoPicker.Mode.CAMERA)
+                        .directory(VideoPicker.Directory.DEFAULT)
+                        .extension(VideoPicker.Extension.MP4)
+                        .enableDebuggingMode(true)
+                        .build()
+                }
+                R.id.llVideoGallery -> {
+                    VideoPicker.Builder(tempActivity)
+                        .mode(VideoPicker.Mode.GALLERY)
+                        .directory(VideoPicker.Directory.DEFAULT)
+                        .extension(VideoPicker.Extension.MP4)
+                        .enableDebuggingMode(true)
+                        .build()
                 }
                 ACTION_TYPE_FILE -> {
                     val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -195,13 +223,13 @@ class MediaPicker(
                         )
                         options.setToolbarColor(
                             ContextCompat.getColor(
-                                activity?:fragment?.requireContext()!!,
+                                activity ?: fragment?.requireContext()!!,
                                 R.color.crop_toolbar_color
                             )
                         )
                         options.setStatusBarColor(
                             ContextCompat.getColor(
-                                activity?:fragment?.requireContext()!!,
+                                activity ?: fragment?.requireContext()!!,
                                 R.color.crop_statusbar_color
                             )
                         )
@@ -213,7 +241,8 @@ class MediaPicker(
                                     Uri.fromFile(File(it)),
                                     Uri.fromFile(destinationFile)
                                 ).withOptions(options).withAspectRatio(1f, 1f).getIntent(activity)
-                            ,UCrop.REQUEST_CROP)
+                                , UCrop.REQUEST_CROP
+                            )
                         } else {
                             fragment?.startActivityForResult(
                                 UCrop.of(
@@ -223,11 +252,12 @@ class MediaPicker(
                                     1f,
                                     1f
                                 ).getIntent(fragment.context!!)
-                            ,UCrop.REQUEST_CROP)
+                                , UCrop.REQUEST_CROP
+                            )
                         }
                     } else {
 //                        addNewItem(it, TYPE_GALLERY)
-                        onMediaChoose(it)
+                        onMediaChoose(it, MEDIA_TYPE_IMAGE)
                     }
                 }
             }
@@ -237,14 +267,14 @@ class MediaPicker(
             if (mPaths != null) {
                 mPaths[0]?.let {
                     //                        addNewItem(it, TYPE_GALLERY)
-                    onMediaChoose(it)
+                    onMediaChoose(it, MEDIA_TYPE_VIDEO)
                 }
             }
         } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == UCrop.REQUEST_CROP && data != null) {
             val resultUri = UCrop.getOutput(data)
             val imagePath = resultUri?.path ?: ""
 //            addNewItem(imagePath, TYPE_GALLERY)
-            onMediaChoose(imagePath)
+            onMediaChoose(imagePath, MEDIA_TYPE_IMAGE)
         } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 7 && data != null) {
             val pathHolder = data.getData().getPath()
 
@@ -263,7 +293,7 @@ class MediaPicker(
 
 //            pathHolder.showSnackBar(activity)
 //            addNewItem(filePath, TYPE_FILE)
-            onMediaChoose(filePath)
+            onMediaChoose(filePath, MEDIA_TYPE_OTHER)
         }
     }
 

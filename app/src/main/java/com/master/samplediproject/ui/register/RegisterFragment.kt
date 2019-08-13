@@ -33,8 +33,8 @@ class RegisterFragment : Fragment() {
         )
 
         ivProfile.setOnClickListener {
-            mediapicker.start {
-                ivProfile.loadImage(it)
+            mediapicker.start { path, mediaType ->
+                ivProfile.loadImage(path)
             }
         }
     }

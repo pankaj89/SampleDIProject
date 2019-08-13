@@ -38,14 +38,14 @@ class RegisterActivity : DaggerAppCompatActivity() {
         mediapicker = MediaPicker(
             activity = this@RegisterActivity,
             requiresCrop = true,
-            mediaType = MediaPicker.MEDIA_TYPE_VIDEO,
-            action = MediaPicker.ACTION_TYPE_GALLERY or MediaPicker.ACTION_TYPE_CAMERA
+            mediaType = MediaPicker.MEDIA_TYPE_IMAGE or MediaPicker.MEDIA_TYPE_VIDEO,
+            action = MediaPicker.ACTION_TYPE_GALLERY or MediaPicker.ACTION_TYPE_CAMERA or MediaPicker.ACTION_TYPE_FILE
         )
 
         ivProfile.setOnClickListener {
-            mediapicker.start {
-                path = it
-                ivProfile.loadImage(it)
+            mediapicker.start { path, mediaType ->
+                this.path = path
+                ivProfile.loadImage(path)
             }
         }
 
@@ -60,17 +60,18 @@ class RegisterActivity : DaggerAppCompatActivity() {
 
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.container, RegisterFragment())
-            .commit()
+//        supportFragmentManager.beginTransaction().replace(R.id.container, RegisterFragment())
+//            .commit()
 //        registerViewModel.callWS()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        mediapicker.onActivityResult(requestCode, resultCode, data)
+
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
+        mediapicker.onActivityResult(requestCode, resultCode, data)
 
     }
 
@@ -80,6 +81,6 @@ class RegisterActivity : DaggerAppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        mediapicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        mediapicker.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

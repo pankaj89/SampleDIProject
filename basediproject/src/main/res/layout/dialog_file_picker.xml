@@ -5,24 +5,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:gravity="center"
         android:minWidth="400dp"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.master.basediproject.utils.FlowLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/file_picker_margin"
             android:layout_marginBottom="@dimen/file_picker_margin"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:flChildSpacing="@dimen/file_picker_margin"
+            app:flRowSpacing="@dimen/dp_8">
 
             <LinearLayout
-                android:id="@+id/llCamera"
+                android:id="@+id/llImageCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/file_picker_margin"
-                android:layout_marginRight="@dimen/file_picker_margin"
+
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -42,11 +43,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llGallery"
+                android:id="@+id/llImageGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/file_picker_margin"
-                android:layout_marginEnd="@dimen/file_picker_margin"
+
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -67,13 +67,54 @@
                     android:text="Gallery" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llVideoCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:background="@drawable/circle_black"
+                    android:backgroundTint="#6E63DF"
+                    android:padding="@dimen/dp_16"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_menu_video_camera" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camera" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llVideoGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:background="@drawable/circle_black"
+                    android:backgroundTint="#D86A38"
+                    android:padding="@dimen/dp_16"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@drawable/ic_menu_video_gallery" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/file_picker_margin"
-                android:layout_marginLeft="@dimen/file_picker_margin"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -91,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:text="File" />
             </LinearLayout>
-        </LinearLayout>
+        </com.master.basediproject.utils.FlowLayout>
 
     </LinearLayout>
 </layout>
