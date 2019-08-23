@@ -2,6 +2,7 @@ package com.master.basediproject.utils.preference
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import java.lang.reflect.Type
 import kotlin.reflect.KProperty
@@ -14,6 +15,9 @@ class GsonNullablePref<T : Any>(
     private val gson: Gson
 ) : AbstractPref<T?>() {
 
+    init {
+        Log.i("TAG","")
+    }
     override fun getFromPreference(property: KProperty<*>, preference: SharedPreferences): T? {
         return preference.getString(key ?: property.name, null)?.let { json ->
             deserializeFromJson(json) ?: default

@@ -42,6 +42,8 @@ class RegisterActivity : DaggerAppCompatActivity() {
             action = MediaPicker.ACTION_TYPE_GALLERY or MediaPicker.ACTION_TYPE_CAMERA or MediaPicker.ACTION_TYPE_FILE
         )
 
+        pref.userDetail = User("1", "Pankaj")
+
         ivProfile.setOnClickListener {
             mediapicker.start { path, mediaType ->
                 this.path = path
@@ -50,13 +52,14 @@ class RegisterActivity : DaggerAppCompatActivity() {
         }
 
         btnRegister.setOnClickListener {
-            if (path?.isNotBlank() == true)
+            Timber.i(pref.userDetail?.name?:"")
+            /*if (path?.isNotBlank() == true)
                 ImagePreviewActivity.getIntent(this, path).startActivity(this)
 
             DialogSpinner.with(this, arrayListOf<String>("India", "Pakistan", "Australia"))
                 .setEnableSearch(true).setMap { value: String -> "" + value }
                 .setOnValueSelectedCallback { model ->
-                }.build().show(supportFragmentManager)
+                }.build().show(supportFragmentManager)*/
 
         }
 

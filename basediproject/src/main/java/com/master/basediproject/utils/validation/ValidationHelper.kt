@@ -14,19 +14,19 @@ class ValidationHelper(anim: Animation) {
     /**
      * Simple field required Validation
      */
-    fun addRequiredValidation(textInputLayout: TextInputLayout, blankEmailMsg: String) {
+    fun addRequiredValidation(textInputLayout: TextInputLayout, blankMsg: String) {
         validator.errorRemoveOnChange(textInputLayout)
         validationList.add(
             ValidationModel(
                 mTextInputLayout = textInputLayout,
-                mErrMsg = blankEmailMsg
+                mErrMsg = blankMsg
             )
         )
     }
 
-    fun addRequiredValidation(editText: EditText, blankEmailMsg: String) {
+    fun addRequiredValidation(editText: EditText, blankMsg: String) {
         validator.errorRemoveOnChange(editText)
-        validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
+        validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
     }
 
 
@@ -106,19 +106,20 @@ class ValidationHelper(anim: Animation) {
 
     fun addMobileValidation(
         editText: EditText,
-        blankEmailMsg: String,
-        invalidEmailMsg: String,
-        isRequired: Boolean = true
+        blankMobileNumberMsg: String,
+        invalidMobileNumberMsg: String,
+        isRequired: Boolean = true,
+        mobileNumberPattern: Pattern = MOBILE
     ) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
-            validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
+            validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMobileNumberMsg))
         }
         validationList.add(
             ValidationModel(
                 mEditText = editText,
-                mErrMsg = invalidEmailMsg,
-                mPattern = MOBILE
+                mErrMsg = invalidMobileNumberMsg,
+                mPattern = mobileNumberPattern
             )
         )
     }
@@ -286,7 +287,7 @@ class ValidationHelper(anim: Animation) {
         )
 
         val MOBILE: Pattern = Pattern.compile(
-            "^[6-9]\\d{9}\$"
+            "^\\d{7,12}$"
         )
 
         val STRONG_PASSWORD_CHECK: Pattern = Pattern.compile(

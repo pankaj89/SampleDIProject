@@ -83,14 +83,14 @@ abstract class KotprefModel(val context: Context, val gson: Gson) {
         commitByDefault: Boolean = commitAllPropertiesByDefault
     ): ReadWriteProperty<KotprefModel, String> = StringPref(default, key, commitByDefault)
 
-    protected fun <T : Any> gsonNullablePref(
+    inline fun <reified T : Any> gsonNullablePref(
         default: T? = null,
         key: String? = null,
         commitByDefault: Boolean = commitAllPropertiesByDefault
     ): ReadWriteProperty<KotprefModel, T?> =
         GsonNullablePref(object : TypeToken<T>() {}.type, default, key, commitByDefault, gson)
 
-    protected fun <T : Any> gsonPref(
+    inline fun <reified T : Any> gsonPref(
         default: T,
         key: String? = null,
         commitByDefault: Boolean = commitAllPropertiesByDefault
