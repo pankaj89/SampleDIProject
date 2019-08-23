@@ -31,8 +31,10 @@ import androidx.fragment.app.Fragment
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.master.basediproject.utils.ProgressRequestBody
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -331,14 +333,18 @@ fun String.toStringPart(): RequestBody {
     return RequestBody.create(MediaType.parse("text/plain"), if (this == null) "" else this);
 }
 
-fun String.toFilePart(): RequestBody {
-    return RequestBody.create(MediaType.parse("image/*"), File(this))
-}
-
 fun String.toMultibodyFilePart(key: String): MultipartBody.Part {
     val file = File(this)
     val filebody = RequestBody.create(MediaType.parse("image/*"), file)
     return MultipartBody.Part.createFormData(key, file.getName(), filebody)
+}
+
+fun String.toProgressFilePart(callback: (percentage: Float) -> Unit): ProgressRequestBody {
+    val videoPart = ProgressRequestBody(File(this))
+    videoPart.getProgressSubject()
+        .subscribeOn(Schedulers.io())
+        .subscribe(callback)
+    return videoPart
 }
 
 fun String.showToast(context: Context?) {
