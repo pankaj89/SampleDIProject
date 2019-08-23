@@ -63,7 +63,6 @@ class RegisterActivity : DaggerAppCompatActivity() {
                 }.build().show(supportFragmentManager)*/
 
         }
-"".toMultibodyFilePart()
 //        supportFragmentManager.beginTransaction().replace(R.id.container, RegisterFragment())
 //            .commit()
 //        registerViewModel.callWS()
