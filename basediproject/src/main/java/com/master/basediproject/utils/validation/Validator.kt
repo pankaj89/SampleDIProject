@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.view.animation.Animation
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
+import com.master.basediproject.extensions.showKeyBoard
 
 class Validator(private val anim: Animation) {
 
@@ -86,6 +87,7 @@ class Validator(private val anim: Animation) {
             model.mConfirmationEditText?.error = model.mErrMsg
             model.mConfirmationEditText?.startAnimation(anim)
             model.mConfirmationEditText?.requestFocus()
+            model.mConfirmationEditText?.showKeyBoard()
 
             return false
         }
