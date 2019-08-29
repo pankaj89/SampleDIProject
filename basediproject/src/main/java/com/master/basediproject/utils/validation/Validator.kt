@@ -12,6 +12,9 @@ class Validator(private val anim: Animation) {
      * Pattern validator for text input layout
      */
     fun validateTextInputPattern(model: ValidationModel): Boolean {
+        if(model.mIsRequired == false && model.mTextInputLayout?.editText?.text.toString().isBlank()){
+            return true
+        }
         val pattern = model.mPattern
         val matcher = pattern?.matcher(model.mTextInputLayout?.editText?.text.toString())
         if (matcher?.matches() == false) {
@@ -22,6 +25,25 @@ class Validator(private val anim: Animation) {
         }
         return true
     }
+
+    /**
+     * Pattern validator for edit text
+     */
+    fun validateEditTextPattern(model: ValidationModel): Boolean {
+        if(model.mIsRequired == false && model.mTextInputLayout?.editText?.text.toString().isBlank()){
+            return true
+        }
+        val pattern = model.mPattern
+        val matcher = pattern?.matcher(model.mEditText?.text.toString())
+        if (matcher?.matches() == false) {
+            model.mEditText?.error = model.mErrMsg
+            model.mEditText?.startAnimation(anim)
+            model.mEditText?.requestFocus()
+            return false
+        }
+        return true
+    }
+
 
     /**
      * Required field validator for text input layout
@@ -36,20 +58,7 @@ class Validator(private val anim: Animation) {
         return true
     }
 
-    /**
-     * Pattern validator for edit text
-     */
-    fun validateEditTextPattern(model: ValidationModel): Boolean {
-        val pattern = model.mPattern
-        val matcher = pattern?.matcher(model.mEditText?.text.toString())
-        if (matcher?.matches() == false) {
-            model.mEditText?.error = model.mErrMsg
-            model.mEditText?.startAnimation(anim)
-            model.mEditText?.requestFocus()
-            return false
-        }
-        return true
-    }
+
 
     /**
      * Required field validator for edit text
@@ -68,7 +77,7 @@ class Validator(private val anim: Animation) {
      * Confirm password validator for text input layout
      */
     fun validateTextInputConfirmPassword(model: ValidationModel): Boolean {
-        if (model.mTextInputLayout?.editText?.text.toString() != model.mConfirmationTextInputLayout?.editText?.text.toString()) {
+        if (model.mTextInputLayout?.editText?.text.toString().isNotBlank() && model.mTextInputLayout?.editText?.text.toString() != model.mConfirmationTextInputLayout?.editText?.text.toString()) {
             model.mConfirmationTextInputLayout?.error = model.mErrMsg
             model.mConfirmationTextInputLayout?.startAnimation(anim)
             model.mConfirmationTextInputLayout?.editText?.requestFocus()

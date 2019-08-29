@@ -52,7 +52,8 @@ class ValidationHelper(anim: Animation) {
             ValidationModel(
                 mTextInputLayout = textInputLayout,
                 mErrMsg = invalidEmailMsg,
-                mPattern = EMAIL_ADDRESS
+                mPattern = EMAIL_ADDRESS,
+                mIsRequired =isRequired
             )
         )
     }
@@ -71,7 +72,8 @@ class ValidationHelper(anim: Animation) {
             ValidationModel(
                 mEditText = editText,
                 mErrMsg = invalidEmailMsg,
-                mPattern = EMAIL_ADDRESS
+                mPattern = EMAIL_ADDRESS,
+                mIsRequired =isRequired
             )
         )
     }
@@ -99,7 +101,8 @@ class ValidationHelper(anim: Animation) {
             ValidationModel(
                 mTextInputLayout = textInputLayout,
                 mErrMsg = invalidEmailMsg,
-                mPattern = MOBILE
+                mPattern = MOBILE,
+                mIsRequired =isRequired
             )
         )
     }
@@ -113,13 +116,19 @@ class ValidationHelper(anim: Animation) {
     ) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
-            validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMobileNumberMsg))
+            validationList.add(
+                ValidationModel(
+                    mEditText = editText,
+                    mErrMsg = blankMobileNumberMsg
+                )
+            )
         }
         validationList.add(
             ValidationModel(
                 mEditText = editText,
                 mErrMsg = invalidMobileNumberMsg,
-                mPattern = mobileNumberPattern
+                mPattern = mobileNumberPattern,
+                mIsRequired =isRequired
             )
         )
     }
@@ -145,7 +154,8 @@ class ValidationHelper(anim: Animation) {
                 ValidationModel(
                     mTextInputLayout = textInputLayout,
                     mErrMsg = weakPasswordMSg,
-                    mPattern = strongPattern
+                    mPattern = strongPattern,
+                    mIsRequired =isRequired
                 )
             )
     }
@@ -163,7 +173,8 @@ class ValidationHelper(anim: Animation) {
                 ValidationModel(
                     mEditText = editText,
                     mErrMsg = weakPasswordMSg,
-                    mPattern = strongPattern
+                    mPattern = strongPattern,
+                    mIsRequired =isRequired
                 )
             )
     }
@@ -177,6 +188,7 @@ class ValidationHelper(anim: Animation) {
         mismatchPasswordMsg: String = ""
     ) {
         validator.errorRemoveOnChange(textInputLayout)
+        validator.errorRemoveOnChange(confirmTextInputLayout)
         validationList.add(
             ValidationModel(
                 mTextInputLayout = textInputLayout,
@@ -192,6 +204,7 @@ class ValidationHelper(anim: Animation) {
         mismatchPasswordMsg: String
     ) {
         validator.errorRemoveOnChange(editText)
+        validator.errorRemoveOnChange(confirmEditText)
         validationList.add(
             ValidationModel(
                 mEditText = editText,
