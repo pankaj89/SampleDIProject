@@ -5,6 +5,8 @@ import android.text.TextWatcher
 import android.view.animation.Animation
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
+import com.master.basediproject.extensions.showKeyBoard
+import com.master.basediproject.extensions.showKeyBoard
 
 class Validator(private val anim: Animation) {
 
@@ -20,7 +22,20 @@ class Validator(private val anim: Animation) {
         if (matcher?.matches() == false) {
             model.mTextInputLayout?.error = model.mErrMsg
             model.mTextInputLayout?.startAnimation(anim)
-            model.mTextInputLayout?.editText?.requestFocus()
+            model.mTextInputLayout?.editText?.requestFocusAndKeyboard()
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Required field validator for text input layout
+     */
+    fun validateTextInputRequired(model: ValidationModel): Boolean {
+        if (model.mTextInputLayout?.editText?.text.toString().isBlank()) {
+            model.mTextInputLayout?.error = model.mErrMsg
+            model.mTextInputLayout?.startAnimation(anim)
+            model.mTextInputLayout?.editText?.requestFocusAndKeyboard()
             return false
         }
         return true
@@ -38,7 +53,7 @@ class Validator(private val anim: Animation) {
         if (matcher?.matches() == false) {
             model.mEditText?.error = model.mErrMsg
             model.mEditText?.startAnimation(anim)
-            model.mEditText?.requestFocus()
+            model.mEditText?.requestFocusAndKeyboard()
             return false
         }
         return true
@@ -67,7 +82,7 @@ class Validator(private val anim: Animation) {
         if (model.mEditText?.text.toString().isBlank()) {
             model.mEditText?.error = model.mErrMsg
             model.mEditText?.startAnimation(anim)
-            model.mEditText?.requestFocus()
+            model.mEditText?.requestFocusAndKeyboard()
             return false
         }
         return true
@@ -80,7 +95,7 @@ class Validator(private val anim: Animation) {
         if (model.mTextInputLayout?.editText?.text.toString().isNotBlank() && model.mTextInputLayout?.editText?.text.toString() != model.mConfirmationTextInputLayout?.editText?.text.toString()) {
             model.mConfirmationTextInputLayout?.error = model.mErrMsg
             model.mConfirmationTextInputLayout?.startAnimation(anim)
-            model.mConfirmationTextInputLayout?.editText?.requestFocus()
+            model.mConfirmationTextInputLayout?.editText?.requestFocusAndKeyboard()
 
             return false
         }
@@ -94,7 +109,7 @@ class Validator(private val anim: Animation) {
         if (model.mEditText?.text.toString() == model.mConfirmationEditText?.text.toString()) {
             model.mConfirmationEditText?.error = model.mErrMsg
             model.mConfirmationEditText?.startAnimation(anim)
-            model.mConfirmationEditText?.requestFocus()
+            model.mConfirmationEditText?.requestFocusAndKeyboard()
 
             return false
         }
@@ -141,5 +156,10 @@ class Validator(private val anim: Animation) {
             }
 
         })
+    }
+
+    private fun EditText?.requestFocusAndKeyboard(){
+        this?.requestFocus()
+        this?.showKeyBoard()
     }
 }
