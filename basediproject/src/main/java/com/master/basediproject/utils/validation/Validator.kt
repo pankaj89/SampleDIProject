@@ -61,21 +61,6 @@ class Validator(private val anim: Animation) {
 
 
     /**
-     * Required field validator for text input layout
-     */
-    fun validateTextInputRequired(model: ValidationModel): Boolean {
-        if (model.mTextInputLayout?.editText?.text.toString().isBlank()) {
-            model.mTextInputLayout?.error = model.mErrMsg
-            model.mTextInputLayout?.startAnimation(anim)
-            model.mTextInputLayout?.editText?.requestFocus()
-            return false
-        }
-        return true
-    }
-
-
-
-    /**
      * Required field validator for edit text
      */
     fun validateEditTextRequired(model: ValidationModel): Boolean {
