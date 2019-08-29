@@ -26,8 +26,6 @@ fun ImageView.loadImageWithCircle(url: String?, placeHolder: Int = -1) {
     }
 }
 
-fun ImageView.loadImageWithRoundedCorner(url: String?, placeHolder: Int = -1, radius:Int=0) {
-    val requestManager = Glide.with(this).load(url).apply(RequestOptions.bitmapTransform(RoundedCorners(radius)))
 fun ImageView.loadImageWithRoundedCorner(url: String?, radius:Int = 0,placeHolder: Int = -1) {
     val requestManager = Glide.with(this).load(url).apply(RequestOptions.bitmapTransform(RoundedCorners(radius))).centerCrop()
     if (placeHolder != -1) {

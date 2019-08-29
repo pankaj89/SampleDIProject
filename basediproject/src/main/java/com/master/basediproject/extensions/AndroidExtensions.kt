@@ -54,14 +54,14 @@ fun runAsync(func: () -> Unit): Thread {
     return thread
 }
 
-public fun <T> Fragment.getFromArgument(key: String, defaultValue: T): T {
+fun <T> Fragment.getFromArgument(key: String, defaultValue: T): T {
     if (arguments != null && arguments?.containsKey(key) == true) {
         return arguments!!.get(key) as T
     }
     return defaultValue
 }
 
-public fun <T> Activity.getFromIntent(key: String, defaultValue: T): T {
+fun <T> Activity.getFromIntent(key: String, defaultValue: T): T {
     if (intent.extras != null && intent.extras?.containsKey(key) == true) {
         return intent.extras!!.get(key) as T
     }
@@ -73,7 +73,7 @@ fun WebView?.loadUrlWithPostParam(url: String, postParam: HashMap<String, String
     for ((key, value) in postParam) {
         postData += "$key=${URLEncoder.encode(value, "UTF-8")}&"
     }
-    this?.postUrl(url, postData.toByteArray());
+    this?.postUrl(url, postData.toByteArray())
 }
 
 /*fun runOnUI(func: () -> Unit): Handler {
@@ -96,7 +96,7 @@ fun View.showKeyBoard() {
     inputManager.showSoftInput(this, 0)
 }
 
-public fun AppCompatActivity.hideKeyBoard() {
+fun AppCompatActivity.hideKeyBoard() {
     /*this.postDelayed({
         val inputManager = this.context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -105,12 +105,12 @@ public fun AppCompatActivity.hideKeyBoard() {
 
     val inputManager = this
         .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    val view = getCurrentFocus()
+    val view = currentFocus
     if (view != null)
         inputManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-public fun View.hideKeyBoard() {
+fun View.hideKeyBoard() {
     /*this.postDelayed({
         val inputManager = this.context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -178,7 +178,7 @@ fun EditText.delayTextChangeListener(delay: Long, func: (char: CharSequence) -> 
             }
 
             override fun onNext(value: CharSequence) {
-                func(value ?: "")
+                func(value)
             }
 
             override fun onError(e: Throwable) {
@@ -204,7 +204,7 @@ fun Long.secondsToFormatedString(): String {
     val totalSeconds = this
     val seconds = totalSeconds % 60
     val minutes = totalSeconds / 60 % 60
-    val hours = totalSeconds / 3600;//  Add this % 24 for removing days also
+    val hours = totalSeconds / 3600//  Add this % 24 for removing days also
     val stringBuilder = StringBuilder()
     val mFormatter = Formatter(stringBuilder, Locale.getDefault())
     return if (hours > 0) {
@@ -221,7 +221,7 @@ fun AssetManager.read(assetFilePath: String, func: (content: String) -> Unit) {
 }
 
 fun Activity.rateApp(defaultAllowed: Boolean = false): Boolean {
-    val uri = Uri.parse("market://details?id=" + getPackageName())
+    val uri = Uri.parse("market://details?id=" + packageName)
     val goToMarket = Intent(Intent.ACTION_VIEW, uri)
     // To count with Play market backstack, After pressing back button,
     // to taken back to our application, we need to add following flags to intent.
@@ -239,7 +239,7 @@ fun Activity.rateApp(defaultAllowed: Boolean = false): Boolean {
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())
+                        Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)
                     )
                 )
                 return true
@@ -259,13 +259,13 @@ fun Activity.openUrl(
     try {
         val shareIntent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url))
         if (appName != null) {
-            val pm = getPackageManager()
+            val pm = packageManager
             val activityList = pm?.queryIntentActivities(shareIntent, 0)
             val filteredPackage =
-                activityList?.filter { appName?.contains(it.activityInfo.packageName) == true }
+                activityList?.filter { appName.contains(it.activityInfo.packageName) == true }
                     ?.map { it.activityInfo.packageName }
             if (filteredPackage?.isNotEmpty() == true) {
-                shareIntent.`package` = filteredPackage?.get(0)
+                shareIntent.`package` = filteredPackage.get(0)
                 startActivity(shareIntent)
                 return true
             } else if (defaultAllowed) {
@@ -301,13 +301,13 @@ fun Activity.share(
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         if (appName != null) {
-            val pm = getPackageManager()
+            val pm = packageManager
             val activityList = pm?.queryIntentActivities(shareIntent, 0)
             val filteredPackage =
-                activityList?.filter { appName?.contains(it.activityInfo.packageName) == true }
+                activityList?.filter { appName.contains(it.activityInfo.packageName) == true }
                     ?.map { it.activityInfo.packageName }
             if (filteredPackage?.isNotEmpty() == true) {
-                shareIntent.`package` = filteredPackage?.get(0)
+                shareIntent.`package` = filteredPackage.get(0)
                 startActivity(shareIntent)
                 return true
             } else if (defaultAllowed) {
@@ -330,13 +330,13 @@ fun Fragment.share(text: String, appName: Array<String>? = null): Boolean {
 }
 
 fun String.toStringPart(): RequestBody {
-    return RequestBody.create(MediaType.parse("text/plain"), if (this == null) "" else this);
+    return RequestBody.create(MediaType.parse("text/plain"), if (this == null) "" else this)
 }
 
-fun String.toMultibodyFilePart(key: String): MultipartBody.Part {
+fun String.toMultibodyFilePart(key: String,mimeType: String = "image/*"): MultipartBody.Part {
     val file = File(this)
-    val filebody = RequestBody.create(MediaType.parse("image/*"), file)
-    return MultipartBody.Part.createFormData(key, file.getName(), filebody)
+    val filebody = RequestBody.create(MediaType.parse(mimeType), file)
+    return MultipartBody.Part.createFormData(key, file.name, filebody)
 }
 
 fun String.toProgressFilePart(callback: (percentage: Float) -> Unit): ProgressRequestBody {
@@ -402,8 +402,8 @@ fun EditText.onLeftDrawableClickListener(threshHold: Int = 0, func: () -> Unit) 
         val DRAWABLE_BOTTOM = 3
 
         if (event.action == MotionEvent.ACTION_UP) {
-            val bound = this.getCompoundDrawables()[DRAWABLE_LEFT]
-            if (event.rawX <= this.left + (bound?.getBounds()?.width() ?: 0) + threshHold) {
+            val bound = this.compoundDrawables[DRAWABLE_LEFT]
+            if (event.rawX <= this.left + (bound?.bounds?.width() ?: 0) + threshHold) {
                 func()
                 return@OnTouchListener false
             }
@@ -420,8 +420,8 @@ fun EditText.onRightDrawableClickListener(threshHold: Int = 0, func: () -> Unit)
         val DRAWABLE_BOTTOM = 3
 
         if (event.action == MotionEvent.ACTION_UP) {
-            val bound = this.getCompoundDrawables()[DRAWABLE_RIGHT]
-            if (event.rawX > this.right - (bound?.getBounds()?.width() ?: 0) + threshHold) {
+            val bound = this.compoundDrawables[DRAWABLE_RIGHT]
+            if (event.rawX > this.right - (bound?.bounds?.width() ?: 0) + threshHold) {
                 func()
                 return@OnTouchListener false
             }
@@ -565,12 +565,12 @@ fun Int.dpRestoPx(context: Context? = null): Float {
     if (context == null) {
         r = Resources.getSystem()
     } else {
-        r = context.getResources()
+        r = context.resources
     }
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_PX,
         r.getDimension(this),
-        context?.resources?.getDisplayMetrics()
+        context?.resources?.displayMetrics
     )
 }
 
