@@ -24,6 +24,14 @@ class ValidationHelper(anim: Animation) {
         )
     }
 
+    fun addCustomLogicValidation(customLogicValidation: CustomLogicValidation) {
+        validationList.add(
+            ValidationModel(
+                customLogicValidation = customLogicValidation
+            )
+        )
+    }
+
     fun addRequiredValidation(editText: EditText, blankMsg: String) {
         validator.errorRemoveOnChange(editText)
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
@@ -53,7 +61,7 @@ class ValidationHelper(anim: Animation) {
                 mTextInputLayout = textInputLayout,
                 mErrMsg = invalidEmailMsg,
                 mPattern = EMAIL_ADDRESS,
-                mIsRequired =isRequired
+                mIsRequired = isRequired
             )
         )
     }
@@ -73,7 +81,7 @@ class ValidationHelper(anim: Animation) {
                 mEditText = editText,
                 mErrMsg = invalidEmailMsg,
                 mPattern = EMAIL_ADDRESS,
-                mIsRequired =isRequired
+                mIsRequired = isRequired
             )
         )
     }
@@ -102,7 +110,7 @@ class ValidationHelper(anim: Animation) {
                 mTextInputLayout = textInputLayout,
                 mErrMsg = invalidEmailMsg,
                 mPattern = MOBILE,
-                mIsRequired =isRequired
+                mIsRequired = isRequired
             )
         )
     }
@@ -128,7 +136,7 @@ class ValidationHelper(anim: Animation) {
                 mEditText = editText,
                 mErrMsg = invalidMobileNumberMsg,
                 mPattern = mobileNumberPattern,
-                mIsRequired =isRequired
+                mIsRequired = isRequired
             )
         )
     }
@@ -155,7 +163,7 @@ class ValidationHelper(anim: Animation) {
                     mTextInputLayout = textInputLayout,
                     mErrMsg = weakPasswordMSg,
                     mPattern = strongPattern,
-                    mIsRequired =isRequired
+                    mIsRequired = isRequired
                 )
             )
     }
@@ -174,7 +182,7 @@ class ValidationHelper(anim: Animation) {
                     mEditText = editText,
                     mErrMsg = weakPasswordMSg,
                     mPattern = strongPattern,
-                    mIsRequired =isRequired
+                    mIsRequired = isRequired
                 )
             )
     }
@@ -256,7 +264,8 @@ class ValidationHelper(anim: Animation) {
     fun validateAll(): Boolean {
         if (validationList.isNotEmpty()) {
             validationList.forEach {
-                if (it.mEditText == null) {
+                //Custom Regular express
+                if (it.mTextInputLayout != null && it.mEditText == null) {
                     if (it.mPattern == null) {
                         if (it.mConfirmationTextInputLayout != null) {
                             if (!validator.validateTextInputConfirmPassword(it)) return false
@@ -267,7 +276,7 @@ class ValidationHelper(anim: Animation) {
                         if (!validator.validateTextInputPattern(it)) return false
                     }
 
-                } else {
+                } else if (it.mEditText != null && it.mTextInputLayout == null) {
                     if (it.mPattern == null) {
                         if (it.mConfirmationTextInputLayout != null) {
                             if (!validator.validateEditTextConfirmPassword(it)) return false
@@ -277,7 +286,8 @@ class ValidationHelper(anim: Animation) {
                     } else {
                         if (!validator.validateEditTextPattern(it)) return false
                     }
-
+                } else if (it.mEditText == null && it.mTextInputLayout == null) {
+                    if (it.customLogicValidation?.isValid() == false) return false
                 }
             }
         } else {
