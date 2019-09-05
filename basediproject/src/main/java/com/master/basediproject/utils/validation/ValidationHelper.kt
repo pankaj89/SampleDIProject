@@ -3,6 +3,7 @@ package com.master.basediproject.utils.validation
 import android.view.animation.Animation
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
+import timber.log.Timber
 import java.util.regex.Pattern
 
 
@@ -291,9 +292,9 @@ class ValidationHelper(anim: Animation) {
                 }
             }
         } else {
-            throw IllegalArgumentException("Please add atleast one validations in validation list to call validateAll method")
+            Timber.e("You don't have any validations added in your validation list")
+            return true
         }
-
         return true
     }
 
