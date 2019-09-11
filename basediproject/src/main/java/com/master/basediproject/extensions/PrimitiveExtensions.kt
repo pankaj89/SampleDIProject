@@ -47,6 +47,7 @@ fun String?.stringIfBlank(value: String): String {
     return if (this?.isNotBlank() == true) this else value
 }
 
+
 fun String.formatDate(inputFormat: String, outputFormat: String): String {
     try {
         val inputDateFormat = SimpleDateFormat(inputFormat)
