@@ -4,7 +4,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@drawable/rounded_corner_top_background"
         android:gravity="center"
         android:minWidth="400dp"
         android:orientation="vertical"
@@ -23,7 +23,6 @@
                 android:id="@+id/llImageCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -31,9 +30,9 @@
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="@dimen/dp_60"
                     android:background="@drawable/circle_black"
-                    android:backgroundTint="#FF69B4"
+                    android:backgroundTint="#40FFA719"
+                    android:tint="#FFA719"
                     android:padding="@dimen/dp_16"
-                    android:tint="#FFFFFF"
                     app:srcCompat="@drawable/ic_menu_camera" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -54,11 +53,10 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="@dimen/dp_60"
-
                     android:background="@drawable/circle_black"
-                    android:backgroundTint="#999999"
+                    android:backgroundTint="#40666666"
+                    android:tint="#666666"
                     android:padding="@dimen/dp_16"
-                    android:tint="#FFFFFF"
                     app:srcCompat="@drawable/ic_menu_gallery" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -78,9 +76,9 @@
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="@dimen/dp_60"
                     android:background="@drawable/circle_black"
-                    android:backgroundTint="#6E63DF"
                     android:padding="@dimen/dp_16"
-                    android:tint="#FFFFFF"
+                    android:backgroundTint="#40FFA719"
+                    android:tint="#FFA719"
                     app:srcCompat="@drawable/ic_menu_video_camera" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -100,9 +98,9 @@
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="@dimen/dp_60"
                     android:background="@drawable/circle_black"
-                    android:backgroundTint="#D86A38"
                     android:padding="@dimen/dp_16"
-                    android:tint="#FFFFFF"
+                    android:backgroundTint="#40666666"
+                    android:tint="#666666"
                     app:srcCompat="@drawable/ic_menu_video_gallery" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -122,9 +120,9 @@
                     android:layout_width="@dimen/dp_60"
                     android:layout_height="@dimen/dp_60"
                     android:background="@drawable/circle_black"
-                    android:backgroundTint="#228B22"
                     android:padding="@dimen/dp_16"
-                    android:tint="#FFFFFF"
+                    android:backgroundTint="#40FFA719"
+                    android:tint="#FFA719"
                     app:srcCompat="@drawable/ic_file_white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
