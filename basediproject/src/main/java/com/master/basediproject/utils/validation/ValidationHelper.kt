@@ -93,23 +93,24 @@ class ValidationHelper(anim: Animation) {
      */
     fun addMobileValidation(
         textInputLayout: TextInputLayout,
-        blankEmailMsg: String,
-        invalidEmailMsg: String,
-        isRequired: Boolean = true
+        blankMobileNumberMsg: String,
+        invalidMobileNumberMsg: String,
+        isRequired: Boolean = true,
+        mobileNumberPattern: Pattern = MOBILE
     ) {
         validator.errorRemoveOnChange(textInputLayout)
         if (isRequired) {
             validationList.add(
                 ValidationModel(
                     mTextInputLayout = textInputLayout,
-                    mErrMsg = blankEmailMsg
+                    mErrMsg = blankMobileNumberMsg
                 )
             )
         }
         validationList.add(
             ValidationModel(
                 mTextInputLayout = textInputLayout,
-                mErrMsg = invalidEmailMsg,
+                mErrMsg = invalidMobileNumberMsg,
                 mPattern = MOBILE,
                 mIsRequired = isRequired
             )

@@ -535,7 +535,8 @@ fun <T> List<T>?.toArrayList(): ArrayList<T> {
 }
 
 fun String.toUnformatValue(): String {
-    return this.replace(",", "")
+    val s = this.replace(",", "")
+    return s.replace("\u20A6", "").trim()
 }
 
 fun String.toformatedValue(): String {

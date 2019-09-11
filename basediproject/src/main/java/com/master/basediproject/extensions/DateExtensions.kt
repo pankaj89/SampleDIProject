@@ -25,3 +25,31 @@ fun Long.getFormatedDate(
 fun String.getDate(inputFormat: String = DATE_FORMAT_INPUT): Date {
     return SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
 }
+
+private fun getSuffixForDates(day: Int): String {
+    val suffix = arrayOf("th", "st", "nd", "rd")
+    var last = day % 10
+    if (last >= 4 || day in 11..13) {
+        last = 0
+    }
+    return suffix[last]
+}
+
+fun String.changeDateFormat(
+    inputFormat: String = DATE_FORMAT_INPUT,
+    outputFormat: String = DATE_FORMAT_OUTPUT
+): String {
+    return try {
+        var outFormat = outputFormat
+        if (outFormat.contains("'st'")) {
+            val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
+            val date = SimpleDateFormat("dd", Locale.getDefault()).format(inputDate)
+            val suffix = getSuffixForDates(date.parseInt(0))
+            outFormat = outFormat.replace("st", suffix)
+        }
+        val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
+        SimpleDateFormat(outFormat, Locale.getDefault()).format(inputDate)
+    } catch (e: Exception) {
+        this
+    }
+}
