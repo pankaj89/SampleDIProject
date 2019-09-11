@@ -32,12 +32,12 @@ class MainActivity : DaggerAppCompatActivity() {
             invalidEmailMsg = "Enter valid email",
             isRequired = true
         )
-        validationHelper.addMobileValidation(
+   /*     validationHelper.addMobileValidation(
             tilMobile,
             blankEmailMsg = "Enter mobile number",
             invalidEmailMsg = "Enter valid mobile number",
             isRequired = true
-        )
+        )*/
         validationHelper.addPasswordValidation(
             textInputLayout = tilPassword,
             blankPasswordMsg = "Enter password",
