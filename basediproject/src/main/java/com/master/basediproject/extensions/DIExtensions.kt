@@ -19,7 +19,6 @@ package com.master.basediproject.extensions
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcel
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +34,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.*
 import com.master.basediproject.BuildConfig
+import timber.log.Timber
 
 /**
  * Implementation of lazy that is not thread safe. Useful when you know what thread you will be
@@ -199,6 +199,6 @@ fun exceptionInDebug(t: Throwable) {
     if (BuildConfig.DEBUG) {
         throw t
     } else {
-        Log.i("TAG", t.toString())
+        Timber.d(t.toString())
     }
 }

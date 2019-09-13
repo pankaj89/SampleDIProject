@@ -20,6 +20,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.webkit.MimeTypeMap
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageView
@@ -333,10 +334,30 @@ fun String.toStringPart(): RequestBody {
     return RequestBody.create(MediaType.parse("text/plain"), if (this == null) "" else this)
 }
 
-fun String.toMultibodyFilePart(key: String,mimeType: String = "image/*"): MultipartBody.Part {
+//fun String.toMultibodyFilePart(key: String, mimeType: String = "image/*"): MultipartBody.Part {
+//    val file = File(this)
+//    val filebody = RequestBody.create(MediaType.parse(mimeType), file)
+//    return MultipartBody.Part.createFormData(key, file.name, filebody)
+//}
+
+fun String.toMultibodyFilePart(key: String, mimeType: String = ""): MultipartBody.Part {
     val file = File(this)
-    val filebody = RequestBody.create(MediaType.parse(mimeType), file)
-    return MultipartBody.Part.createFormData(key, file.name, filebody)
+    val actualMimeType = mimeType.stringIfBlank(this.getMimeType("image/*"))
+    val filebody = RequestBody.create(MediaType.parse(actualMimeType), file)
+    return MultipartBody.Part.createFormData(key, file.getName(), filebody)
+}
+
+fun String.getMimeType(defaultMimeType: String): String {
+    var type: String = defaultMimeType
+    try {
+        val extension = MimeTypeMap.getFileExtensionFromUrl(this)
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: defaultMimeType
+        }
+    } catch (e: Exception) {
+
+    }
+    return type
 }
 
 fun String.toProgressFilePart(callback: (percentage: Float) -> Unit): ProgressRequestBody {

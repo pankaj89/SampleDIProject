@@ -11,8 +11,19 @@ fun String.getFormatedDate(
     inputFormat: String = DATE_FORMAT_INPUT,
     outputFormat: String = DATE_FORMAT_OUTPUT
 ): String {
-    val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
-    return SimpleDateFormat(outputFormat, Locale.getDefault()).format(inputDate)
+    return try {
+        var outFormat = outputFormat
+        if (outFormat.contains("'st'")) {
+            val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
+            val date = SimpleDateFormat("dd", Locale.getDefault()).format(inputDate)
+            val suffix = getSuffixForDates(date.parseInt(0))
+            outFormat = outFormat.replace("st", suffix)
+        }
+        val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
+        SimpleDateFormat(outFormat, Locale.getDefault()).format(inputDate)
+    } catch (e: Exception) {
+        this
+    }
 }
 
 fun Long.getFormatedDate(
@@ -33,23 +44,4 @@ private fun getSuffixForDates(day: Int): String {
         last = 0
     }
     return suffix[last]
-}
-
-fun String.changeDateFormat(
-    inputFormat: String = DATE_FORMAT_INPUT,
-    outputFormat: String = DATE_FORMAT_OUTPUT
-): String {
-    return try {
-        var outFormat = outputFormat
-        if (outFormat.contains("'st'")) {
-            val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
-            val date = SimpleDateFormat("dd", Locale.getDefault()).format(inputDate)
-            val suffix = getSuffixForDates(date.parseInt(0))
-            outFormat = outFormat.replace("st", suffix)
-        }
-        val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
-        SimpleDateFormat(outFormat, Locale.getDefault()).format(inputDate)
-    } catch (e: Exception) {
-        this
-    }
 }

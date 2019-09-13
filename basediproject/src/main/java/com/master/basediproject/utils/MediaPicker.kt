@@ -225,7 +225,7 @@ class MediaPicker(
                         val destinationFile = File(
                             filePaths.getLocalDirectory(
                                 type = TYPES.PUBLIC_IMAGE_DIRECTORY
-                            )?.path + "/image_${System.currentTimeMillis()}.png"
+                            )?.path + "/" + File(it).name
                         )
                         destinationFile.createNewFile()
                         //Cropping
@@ -295,7 +295,6 @@ class MediaPicker(
 
             var filePath: String = ""
             val _uri = data.getData()
-//            Log.d("", "URI = " + _uri)
             if (_uri != null && "content" == _uri.getScheme()) {
                 val cursor = activity!!.getContentResolver().query(_uri, null, null, null, null)
                 cursor.moveToFirst()
@@ -304,7 +303,6 @@ class MediaPicker(
             } else {
                 filePath = _uri.getPath() ?: ""
             }
-//            Log.d("", "Chosen path = " + filePath)
 
 //            pathHolder.showSnackBar(activity)
 //            addNewItem(filePath, TYPE_FILE)

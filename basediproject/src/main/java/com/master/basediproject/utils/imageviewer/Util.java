@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.master.basediproject.BuildConfig;
@@ -67,7 +66,7 @@ public class Util {
                 return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             }
         } catch (Exception e) {
-            Log.e("Picture", "Exception in photoCallback", e);
+            Timber.e("Exception in photoCallback" + e);
         }
         return null;
     }
