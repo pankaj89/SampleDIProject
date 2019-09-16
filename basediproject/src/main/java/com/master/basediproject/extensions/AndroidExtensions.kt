@@ -422,11 +422,11 @@ fun EditText.onLeftDrawableClickListener(threshHold: Int = 0, func: () -> Unit) 
         val DRAWABLE_RIGHT = 2
         val DRAWABLE_BOTTOM = 3
 
-        if (event.action == MotionEvent.ACTION_UP) {
+        if (event.action == MotionEvent.ACTION_DOWN) {
             val bound = this.compoundDrawables[DRAWABLE_LEFT]
             if (event.rawX <= this.left + (bound?.bounds?.width() ?: 0) + threshHold) {
                 func()
-                return@OnTouchListener false
+                return@OnTouchListener true
             }
         }
         false
@@ -440,11 +440,11 @@ fun EditText.onRightDrawableClickListener(threshHold: Int = 0, func: () -> Unit)
         val DRAWABLE_RIGHT = 2
         val DRAWABLE_BOTTOM = 3
 
-        if (event.action == MotionEvent.ACTION_UP) {
+        if (event.action == MotionEvent.ACTION_DOWN) {
             val bound = this.compoundDrawables[DRAWABLE_RIGHT]
             if (event.rawX > this.right - (bound?.bounds?.width() ?: 0) + threshHold) {
                 func()
-                return@OnTouchListener false
+                return@OnTouchListener true
             }
         }
         false
