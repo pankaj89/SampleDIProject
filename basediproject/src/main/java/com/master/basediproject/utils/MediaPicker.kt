@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.master.basediproject.R
-import com.master.basediproject.databinding.DialogFilePickerBinding
-import com.master.basediproject.utils.dialog.BottomSheetDialogFragmentHelper
+import com.master.basediproject.utils.dialog.BottomSheetDialogFragmentHelperView
 import com.master.permissionhelper.PermissionHelper
 import com.yalantis.ucrop.UCrop
 import com.yalantis.ucrop.UCropActivity
@@ -56,39 +55,45 @@ class MediaPicker(
     public fun start(onMediaChoose: (path: String, mediaType: Int) -> Unit) {
         this.onMediaChoose = onMediaChoose
         if (activity != null || fragment != null) {
-            BottomSheetDialogFragmentHelper.with<DialogFilePickerBinding>(
+            BottomSheetDialogFragmentHelperView.with(
                 R.layout.dialog_file_picker,
                 isCancellable = true,
                 isCancellableOnTouchOutSide = true
             ) { it, dialog ->
 
-                it.llImageCamera.visibility = View.GONE
-                it.llImageGallery.visibility = View.GONE
-                it.llVideoCamera.visibility = View.GONE
-                it.llVideoGallery.visibility = View.GONE
-                it.llFile.visibility = View.GONE
+                val llImageCamera = it.findViewById<View>(R.id.llImageCamera)
+                val llImageGallery = it.findViewById<View>(R.id.llImageGallery)
+                val llVideoCamera = it.findViewById<View>(R.id.llVideoCamera)
+                val llVideoGallery = it.findViewById<View>(R.id.llVideoGallery)
+                val llFile = it.findViewById<View>(R.id.llFile)
+
+                llImageCamera.visibility = View.GONE
+                llImageGallery.visibility = View.GONE
+                llVideoCamera.visibility = View.GONE
+                llVideoGallery.visibility = View.GONE
+                llFile.visibility = View.GONE
 
                 if (action and ACTION_TYPE_CAMERA == ACTION_TYPE_CAMERA) {
                     if (mediaType and MEDIA_TYPE_IMAGE == MEDIA_TYPE_IMAGE) {
-                        it.llImageCamera.visibility = View.VISIBLE
+                        llImageCamera.visibility = View.VISIBLE
                     }
                     if (mediaType and MEDIA_TYPE_VIDEO == MEDIA_TYPE_VIDEO) {
-                        it.llVideoCamera.visibility = View.VISIBLE
+                        llVideoCamera.visibility = View.VISIBLE
                     }
                 }
                 if (action and ACTION_TYPE_GALLERY == ACTION_TYPE_GALLERY) {
                     if (mediaType and MEDIA_TYPE_IMAGE == MEDIA_TYPE_IMAGE) {
-                        it.llImageGallery.visibility = View.VISIBLE
+                        llImageGallery.visibility = View.VISIBLE
                     }
                     if (mediaType and MEDIA_TYPE_VIDEO == MEDIA_TYPE_VIDEO) {
-                        it.llVideoGallery.visibility = View.VISIBLE
+                        llVideoGallery.visibility = View.VISIBLE
                     }
                 }
                 if (action and ACTION_TYPE_FILE == ACTION_TYPE_FILE) {
-                    it.llFile.visibility = View.VISIBLE
+                    llFile.visibility = View.VISIBLE
                 }
 
-                it.llImageCamera.setOnClickListener {
+                llImageCamera.setOnClickListener {
                     requestPermission(
                         it.id,
                         arrayOf(
@@ -98,14 +103,14 @@ class MediaPicker(
                     )
                     dialog.dismiss()
                 }
-                it.llImageGallery.setOnClickListener {
+                llImageGallery.setOnClickListener {
                     requestPermission(
                         it.id,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     )
                     dialog.dismiss()
                 }
-                it.llVideoCamera.setOnClickListener {
+                llVideoCamera.setOnClickListener {
                     requestPermission(
                         it.id,
                         arrayOf(
@@ -115,14 +120,14 @@ class MediaPicker(
                     )
                     dialog.dismiss()
                 }
-                it.llVideoGallery.setOnClickListener {
+                llVideoGallery.setOnClickListener {
                     requestPermission(
                         it.id,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     )
                     dialog.dismiss()
                 }
-                it.llFile.setOnClickListener {
+                llFile.setOnClickListener {
                     requestPermission(
                         it.id,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
