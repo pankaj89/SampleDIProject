@@ -17,6 +17,8 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:hint="Search here"
+                android:singleLine="true"
+                android:lines="1"
                 android:padding="@dimen/dp_8" />
         </com.google.android.material.appbar.AppBarLayout>
 

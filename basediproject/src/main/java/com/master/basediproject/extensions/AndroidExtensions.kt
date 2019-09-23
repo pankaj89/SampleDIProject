@@ -19,6 +19,8 @@ import android.util.StateSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.webkit.WebView
@@ -85,6 +87,7 @@ fun WebView?.loadUrlWithPostParam(url: String, postParam: HashMap<String, String
     mainHandler.post(myRunnable)
     return mainHandler
 }*/
+
 fun View.showKeyBoard() {
     /*this.postDelayed({
         val inputManager = this.context
@@ -175,7 +178,6 @@ fun EditText.delayTextChangeListener(delay: Long, func: (char: CharSequence) -> 
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object : io.reactivex.Observer<CharSequence> {
             override fun onSubscribe(d: Disposable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onNext(value: CharSequence) {
@@ -183,7 +185,6 @@ fun EditText.delayTextChangeListener(delay: Long, func: (char: CharSequence) -> 
             }
 
             override fun onError(e: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onComplete() {
