@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
@@ -26,6 +27,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
             isAnimationRequire: Boolean = true,
             isCancellable: Boolean = true,
             isCancellableOnTouchOutSide: Boolean = true,
+            forceKeyboardOpen:Boolean = false,
             onStartCallback: ((bottomSheetDialogFragment: DialogFragment) -> Unit)? = null,
             viewCreatedCallback: (binding: B, dialogFragment: DialogFragment) -> Unit
         ): androidx.fragment.app.DialogFragment {
@@ -36,6 +38,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
                     putBoolean("IS_CANCELLABLE_ON_TOUCH_OUTSIDE", isCancellableOnTouchOutSide)
                     putInt("IS_FULL_SCREEN", fullScreenType)
                     putBoolean("IS_ANIMATION_REQUIRE", isAnimationRequire)
+                    putBoolean("IS_KEYBOARD_OPEN", forceKeyboardOpen)
                 }
             }
             dialog.isCancelable = isCancellable
@@ -69,6 +72,16 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
                 ?: true
         )
         return dialog
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val isKeyboardOpen = arguments?.getBoolean("IS_KEYBOARD_OPEN") ?: true
+
+        if(isKeyboardOpen){
+            dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        }
     }
 
     override fun onStart() {

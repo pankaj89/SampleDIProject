@@ -94,18 +94,18 @@ fun parseFloat(value: String?): Float {
 }
 
 fun String?.parseBoolean(): Boolean {
-    if ("1".equals(this)) {
-        return true
+    return if ("1".equals(this)) {
+        true
     } else if ("yes".equals(this, ignoreCase = true)) {
-        return true
+        true
     } else if ("true".equals(this, ignoreCase = true)) {
-        return true
+        true
     } else if ("0".equals(this)) {
-        return false
+        false
     } else if (this.isNullOrBlank()) {
-        return false
+        false
     } else {
-        return this.toBoolean()
+        this.toBoolean()
     }
 }
 
