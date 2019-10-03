@@ -23,6 +23,7 @@ class ValidationHelper(anim: Animation) {
                 mErrMsg = blankMsg
             )
         )
+        textInputLayout.hint = textInputLayout.hint.toString() + "*"
     }
 
     fun addCustomLogicValidation(customLogicValidation: CustomLogicValidation) {
@@ -36,6 +37,8 @@ class ValidationHelper(anim: Animation) {
     fun addRequiredValidation(editText: EditText, blankMsg: String) {
         validator.errorRemoveOnChange(editText)
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
+
+        editText.hint = editText.hint.toString() + "*"
     }
 
 
@@ -56,6 +59,7 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankEmailMsg
                 )
             )
+            textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -76,6 +80,8 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
+
+            editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -106,6 +112,8 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
+
+            textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -132,6 +140,7 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
+            editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -152,13 +161,15 @@ class ValidationHelper(anim: Animation) {
         strongPattern: Pattern = STRONG_PASSWORD_CHECK
     ) {
         validator.errorRemoveOnChange(textInputLayout)
-        if (isRequired)
+        if (isRequired) {
             validationList.add(
                 ValidationModel(
                     mTextInputLayout = textInputLayout,
                     mErrMsg = blankPasswordMsg
                 )
             )
+            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+        }
         if (isStrong)
             validationList.add(
                 ValidationModel(
@@ -176,8 +187,10 @@ class ValidationHelper(anim: Animation) {
         strongPattern: Pattern = STRONG_PASSWORD_CHECK
     ) {
         validator.errorRemoveOnChange(editText)
-        if (isRequired)
+        if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankPasswordMsg))
+            editText.hint = editText.hint.toString() + "*"
+        }
         if (isStrong)
             validationList.add(
                 ValidationModel(
