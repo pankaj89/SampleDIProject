@@ -274,6 +274,13 @@ class ValidationHelper(anim: Animation) {
 
     fun clearAll() {
         validationList.clear()
+        validationList.forEach {
+            if (it.mTextInputLayout != null) {
+                it.mTextInputLayout.hint = it.mTextInputLayout.hint.toString().replace("*", "")
+            } else if (it.mEditText != null) {
+                it.mEditText.hint = it.mEditText.hint.toString().replace("*", "")
+            }
+        }
     }
 
     fun validateAll(): Boolean {
