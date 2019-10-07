@@ -13,7 +13,7 @@ interface WebService {
         val STAGING_URL = "http://auth.dfinas.mrsholdings.com/central/"
         val LIVE_URL = "http://auth.finas.mrsholdings.com/central/"
 
-        var BASE_URL = LOCAL_URL
+        var BASE_URL = STAGING_URL
         val INCLUDE_HEADER = true
     }
 

@@ -23,7 +23,8 @@ class ValidationHelper(anim: Animation) {
                 mErrMsg = blankMsg
             )
         )
-        textInputLayout.hint = textInputLayout.hint.toString() + "*"
+        if(!textInputLayout.hint.toString().trim().endsWith("*"))
+            textInputLayout.hint = textInputLayout.hint.toString() + "*"
     }
 
     fun addCustomLogicValidation(customLogicValidation: CustomLogicValidation) {

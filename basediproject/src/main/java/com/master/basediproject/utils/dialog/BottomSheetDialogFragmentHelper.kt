@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.master.basediproject.R
 
 class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFragment() {
 
@@ -55,6 +57,11 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
         if (viewCreatedCallback == null) {
             dismiss()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogThemeNoFloating)
     }
 
     override fun onStart() {

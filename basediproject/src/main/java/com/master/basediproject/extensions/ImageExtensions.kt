@@ -31,14 +31,15 @@ fun ImageView.loadImageWithCircle(url: String?, placeHolder: Int = -1) {
 }
 
 fun ImageView.loadImageWithRoundedCorner(url: String?, placeHolder: Int = -1, radius: Int = 0) {
-    url.ifNotBlank {
+
+//    url.ifNotBlank {
         val requestManager = Glide.with(this).load(url).apply(RequestOptions.bitmapTransform(RoundedCorners(radius)))
         if (placeHolder != -1) {
             requestManager.apply(RequestOptions().placeholder(placeHolder).error(placeHolder)).into(this)
         } else {
             requestManager.into(this)
         }
-    }
+//    }
 }
 
 fun ImageView.loadImageWithThumb(url: String, placeHolder: Int = -1) {
