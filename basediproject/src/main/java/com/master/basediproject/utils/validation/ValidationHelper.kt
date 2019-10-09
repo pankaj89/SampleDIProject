@@ -23,7 +23,7 @@ class ValidationHelper(anim: Animation) {
                 mErrMsg = blankMsg
             )
         )
-        if(!textInputLayout.hint.toString().trim().endsWith("*"))
+        if (!textInputLayout.hint.toString().trim().endsWith("*"))
             textInputLayout.hint = textInputLayout.hint.toString() + "*"
     }
 
@@ -39,7 +39,8 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
 
-        editText.hint = editText.hint.toString() + "*"
+        if (!editText.hint.toString().trim().endsWith("*"))
+            editText.hint = editText.hint.toString() + "*"
     }
 
 
@@ -60,7 +61,8 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankEmailMsg
                 )
             )
-            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (!textInputLayout.hint.toString().trim().endsWith("*"))
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -81,8 +83,8 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
-
-            editText.hint = editText.hint.toString() + "*"
+            if (!editText.hint.toString().trim().endsWith("*"))
+                editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -113,8 +115,8 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
-
-            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (!textInputLayout.hint.toString().trim().endsWith("*"))
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -141,7 +143,8 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
-            editText.hint = editText.hint.toString() + "*"
+            if (!editText.hint.toString().trim().endsWith("*"))
+                editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -169,7 +172,8 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankPasswordMsg
                 )
             )
-            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (!textInputLayout.hint.toString().trim().endsWith("*"))
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         if (isStrong)
             validationList.add(
@@ -190,7 +194,8 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankPasswordMsg))
-            editText.hint = editText.hint.toString() + "*"
+            if (!editText.hint.toString().trim().endsWith("*"))
+                editText.hint = editText.hint.toString() + "*"
         }
         if (isStrong)
             validationList.add(
