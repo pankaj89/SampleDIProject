@@ -47,7 +47,7 @@ fun String?.stringIfBlank(value: String): String {
 }
 
 
-fun String.formatDate(inputFormat: String, outputFormat: String): String {
+/*fun String.formatDate(inputFormat: String, outputFormat: String): String {
     try {
         val inputDateFormat = SimpleDateFormat(inputFormat)
         val date = inputDateFormat.parse(this)
@@ -57,7 +57,7 @@ fun String.formatDate(inputFormat: String, outputFormat: String): String {
 //        e.printStackTrace()
     }
     return this
-}
+}*/
 
 fun Long.toServerDateFormat(): String {
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)

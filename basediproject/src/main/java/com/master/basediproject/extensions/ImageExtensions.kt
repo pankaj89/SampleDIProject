@@ -1,5 +1,6 @@
 package com.master.basediproject.extensions
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
@@ -35,12 +36,12 @@ fun ImageView.loadImageWithCircle(url: String?, placeHolder: Int = -1) {
 fun ImageView.loadImageWithRoundedCorner(url: String?, placeHolder: Int = -1, radius: Int = 0) {
 
 //    url.ifNotBlank {
-        val requestManager = Glide.with(this).load(url).transform(MultiTransformation(CenterCrop(), RoundedCorners(radius)))
-        if (placeHolder != -1) {
-            requestManager.apply(RequestOptions().placeholder(placeHolder).error(placeHolder)).into(this)
-        } else {
-            requestManager.into(this)
-        }
+    val requestManager = Glide.with(this).load(url).transform(MultiTransformation(CenterCrop(), RoundedCorners(radius)))
+    if (placeHolder != -1) {
+        requestManager.apply(RequestOptions().placeholder(placeHolder).error(placeHolder)).into(this)
+    } else {
+        requestManager.into(this)
+    }
 //    }
 }
 
@@ -74,11 +75,15 @@ fun ImageView.loadImageNoAnimate(placeHolder: Int) {
     Glide.with(this.context.applicationContext).load(placeHolder).dontAnimate().into(this)
 }
 
-@BindingAdapter("bind:imageUrl")
-fun setImageUrl(imageView: AppCompatImageView, url: String?) {
+@BindingAdapter(value = ["bind:imageUrl", "bind:placeHolder"], requireAll = false)
+fun setImageUrl(imageView: AppCompatImageView, url: String?, placeHolder:Drawable?=null) {
 
-    url?.ifNotBlank {
-        Glide.with(imageView.context.applicationContext).load(it).apply(RequestOptions.noAnimation()).into(imageView)
+//    url?.ifNotBlank {
+    if (url?.isNotBlank() == true) {
+        Glide.with(imageView.context.applicationContext).load(url).apply(RequestOptions.noAnimation()).into(imageView)
+    } else {
+        imageView.setImageDrawable(placeHolder)
     }
+//    }
 
 }
