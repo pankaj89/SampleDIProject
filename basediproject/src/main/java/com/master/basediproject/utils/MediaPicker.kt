@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.master.basediproject.utils.filepicker.FilePickerActivity
 import com.master.basediproject.R
 import com.master.basediproject.utils.dialog.BottomSheetDialogFragmentHelperView
 import com.master.permissionhelper.PermissionHelper
@@ -52,7 +53,7 @@ class MediaPicker(
     var onMediaChoose: (path: String, mediaType: Int) -> Unit = { path, mediaType -> }
 
     var permissionHelper: PermissionHelper? = null
-    public fun start(onMediaChoose: (path: String, mediaType: Int) -> Unit) {
+    fun start(onMediaChoose: (path: String, mediaType: Int) -> Unit) {
         this.onMediaChoose = onMediaChoose
         if (activity != null || fragment != null) {
             BottomSheetDialogFragmentHelperView.with(
@@ -198,23 +199,36 @@ class MediaPicker(
                         .build()
                 }
                 R.id.llFile -> {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    if (mediaType == MEDIA_TYPE_IMAGE) {
-                        intent.setType("image/*")
-                    } else if (mediaType == MEDIA_TYPE_VIDEO) {
-                        intent.setType("video/*")
-                    } else {
-                        intent.setType("*/*")
-                    }
+//                    val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                    if (mediaType == MEDIA_TYPE_IMAGE) {
+//                        intent.type = "image/*"
+//                    } else if (mediaType == MEDIA_TYPE_VIDEO) {
+//                        intent.type = "video/*"
+//                    } else {
+//                        intent.type = "*/*"
+//                    }
+//                    if (activity != null)
+//                        activity.startActivityForResult(
+//                            intent,
+//                            customRequestCode * FILE_PICKER_REQUEST_CODE
+//                        )
+//                    else fragment?.startActivityForResult(
+//                        intent,
+//                        customRequestCode * FILE_PICKER_REQUEST_CODE
+//                    )
+//
+
                     if (activity != null)
                         activity.startActivityForResult(
-                            intent,
+                            FilePickerActivity.getIntent(activity),
                             customRequestCode * FILE_PICKER_REQUEST_CODE
                         )
                     else fragment?.startActivityForResult(
-                        intent,
+                        FilePickerActivity.getIntent(fragment.activity!!),
                         customRequestCode * FILE_PICKER_REQUEST_CODE
                     )
+
+
                 }
             }
         }
@@ -225,7 +239,7 @@ class MediaPicker(
             val mPaths =
                 data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
             if (mPaths != null) {
-                mPaths[0]?.let {
+                mPaths[0].let {
                     if (requiresCrop == true) {
                         val destinationFile = File(
                             filePaths.getLocalDirectory(
@@ -276,7 +290,7 @@ class MediaPicker(
                             )
                         }
                     } else {
-//                        addNewItem(it, TYPE_GALLERY)
+            //                        addNewItem(it, TYPE_GALLERY)
                         onMediaChoose(it, MEDIA_TYPE_IMAGE)
                     }
                 }
@@ -285,7 +299,7 @@ class MediaPicker(
             val mPaths =
                 data?.getSerializableExtra(VideoPicker.EXTRA_VIDEO_PATH) as ArrayList<String>
             if (mPaths != null) {
-                mPaths[0]?.let {
+                mPaths[0].let {
                     //                        addNewItem(it, TYPE_GALLERY)
                     onMediaChoose(it, MEDIA_TYPE_VIDEO)
                 }
@@ -296,21 +310,19 @@ class MediaPicker(
 //            addNewItem(imagePath, TYPE_GALLERY)
             onMediaChoose(imagePath, MEDIA_TYPE_IMAGE)
         } else if (requestCode == customRequestCode * FILE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            val pathHolder = data.getData().getPath()
+//            val pathHolder = data.data.path
 
-            var filePath: String = ""
-            val _uri = data.getData()
-            if (_uri != null && "content" == _uri.getScheme()) {
-                val cursor = activity!!.getContentResolver().query(_uri, null, null, null, null)
+            val filePath = data.getStringExtra("filePath")
+            /*val _uri = data.data
+            if (_uri != null && "content" == _uri.scheme) {
+                val cursor = activity!!.contentResolver.query(_uri, null, null, null, null)
                 cursor.moveToFirst()
                 filePath = cursor.getString(0) ?: ""
                 cursor.close()
             } else {
-                filePath = _uri.getPath() ?: ""
-            }
+                filePath = _uri.path ?: ""
+            }*/
 
-//            pathHolder.showSnackBar(activity)
-//            addNewItem(filePath, TYPE_FILE)
             onMediaChoose(filePath, MEDIA_TYPE_OTHER)
         }
     }

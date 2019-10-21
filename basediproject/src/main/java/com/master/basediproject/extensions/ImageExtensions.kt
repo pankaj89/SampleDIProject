@@ -76,7 +76,7 @@ fun ImageView.loadImageNoAnimate(placeHolder: Int) {
 }
 
 @BindingAdapter(value = ["bind:imageUrl", "bind:placeHolder"], requireAll = false)
-fun setImageUrl(imageView: AppCompatImageView, url: String?, placeHolder:Drawable?=null) {
+fun setImageUrl(imageView: AppCompatImageView, url: String?, placeHolder: Drawable? = null) {
 
 //    url?.ifNotBlank {
     if (url?.isNotBlank() == true) {

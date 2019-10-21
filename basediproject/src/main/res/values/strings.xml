@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BaseDIProject</string>
+    <string name="file_picker">Choose your file</string>
+
 </resources>

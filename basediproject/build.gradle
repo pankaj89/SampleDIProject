@@ -79,6 +79,7 @@ dependencies {
 
     //PermissionHelper
     api 'com.master.android:permissionhelper:2.1'
+    api 'com.master.android:simpleadapter:3.2'
 
     //Glide
     api 'com.github.bumptech.glide:glide:4.9.0'

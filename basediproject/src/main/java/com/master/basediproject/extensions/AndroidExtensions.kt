@@ -597,3 +597,8 @@ fun Int.dpRestoPx(context: Context? = null): Float {
     )
 }
 
+// to get file name from path
+fun String.getFileName(): String {
+    return this.substring(this.lastIndexOf("/") + 1, this.length)
+}
+

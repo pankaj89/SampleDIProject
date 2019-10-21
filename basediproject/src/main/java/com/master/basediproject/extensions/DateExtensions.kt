@@ -6,6 +6,7 @@ import java.util.*
 
 const val DATE_FORMAT_INPUT = "dd/MM/yyyy"
 const val DATE_FORMAT_OUTPUT = "dd-MM-yyyy"
+const val DATE_FORMAT_FILE = "dd/MM/yyyy HH:mm"
 
 fun String.getFormatedDate(
     inputFormat: String = DATE_FORMAT_INPUT,

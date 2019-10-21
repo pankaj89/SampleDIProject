@@ -35,8 +35,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.master.android:simpleadapter:3.2'
-
     //Base Project
     api project(path: ':basediproject')
 
