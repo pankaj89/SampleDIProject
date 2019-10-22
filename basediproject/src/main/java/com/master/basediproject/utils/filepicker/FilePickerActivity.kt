@@ -36,7 +36,7 @@ class FilePickerActivity : AppCompatActivity() {
 
     lateinit var permissionHelper: PermissionHelper
     private var adapter: SimpleAdapter<FilesData>? = null
-
+    val list = ArrayList<FilesData>()
 
     companion object {
 
@@ -144,7 +144,6 @@ class FilePickerActivity : AppCompatActivity() {
     fun walk(root: File): ArrayList<FilesData> {
 
         val listFile = root.listFiles()
-        val list = ArrayList<FilesData>()
 
         if (listFile != null && listFile.isNotEmpty()) {
             for (f in listFile) {
