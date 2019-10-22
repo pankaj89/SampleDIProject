@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.Formatter
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,9 @@ import com.master.basediproject.utils.FilePaths
 import com.master.basediproject.utils.TYPES
 import com.master.permissionhelper.PermissionHelper
 import com.simpleadapter.SimpleAdapter
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_file_picker.*
 import timber.log.Timber
 import java.io.File
@@ -32,7 +36,7 @@ class FilePickerActivity : AppCompatActivity() {
 
     lateinit var permissionHelper: PermissionHelper
     private var adapter: SimpleAdapter<FilesData>? = null
-    val list = ArrayList<FilesData>()
+
 
     companion object {
 
@@ -95,13 +99,23 @@ class FilePickerActivity : AppCompatActivity() {
             PermissionHelper(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
 
         permissionHelper.requestAll {
-            walk(
-                File(
-                    filePaths.getLocalDirectory(
-                        type = TYPES.GENERAL_PUBLIC_DIRECTORY
-                    )?.path
+            pbLoading.visibility = View.VISIBLE
+            Observable.fromCallable {
+                walk(
+                    File(
+                        filePaths.getLocalDirectory(
+                            type = TYPES.GENERAL_PUBLIC_DIRECTORY
+                        )?.path
+                    )
                 )
-            )
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    pbLoading.visibility = View.GONE
+                    setRecyclerView(it)
+                }, {
+                    Timber.e(it)
+                })
         }
 
         permissionHelper.denied {
@@ -127,9 +141,10 @@ class FilePickerActivity : AppCompatActivity() {
         }
     }
 
-    fun walk(root: File) {
+    fun walk(root: File): ArrayList<FilesData> {
 
         val listFile = root.listFiles()
+        val list = ArrayList<FilesData>()
 
         if (listFile != null && listFile.isNotEmpty()) {
             for (f in listFile) {
@@ -163,12 +178,14 @@ class FilePickerActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
 
-        setRecyclerView()
+            return if (list.isNotEmpty()) list else ArrayList()
+        } else {
+            return ArrayList()
+        }
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView(list: ArrayList<FilesData>) {
         adapter?.clear()
         adapter?.addAll(list)
         adapter?.notifyDataSetChanged()
