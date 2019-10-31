@@ -8,6 +8,9 @@ const val DATE_FORMAT_INPUT = "dd/MM/yyyy"
 const val DATE_FORMAT_OUTPUT = "dd-MM-yyyy"
 const val DATE_FORMAT_FILE = "dd/MM/yyyy HH:mm"
 
+const val TIME_FORMAT_INPUT = "HH:mm"
+const val TIME_FORMAT_OUTPUT = "hh:mm a"
+
 fun String.getFormatedDate(
     inputFormat: String = DATE_FORMAT_INPUT,
     outputFormat: String = DATE_FORMAT_OUTPUT
