@@ -363,7 +363,7 @@ fun String.toMultibodyFilePart(key: String, mimeType: String = ""): MultipartBod
 fun String.getMimeType(defaultMimeType: String): String {
     var type: String = defaultMimeType
     try {
-        val extension = MimeTypeMap.getFileExtensionFromUrl(this)
+        val extension = MimeTypeMap.getFileExtensionFromUrl(this.toLowerCase()).toLowerCase()
         if (extension != null) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: defaultMimeType
         }
