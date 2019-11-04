@@ -153,19 +153,31 @@ fun <T> Intent.getObject(key: String): T {
 }
 
 fun Intent.startActivity(activity: AppCompatActivity) {
-    activity.startActivity(this)
+    try {
+        activity.startActivity(this)
+    } catch (e: Exception) {
+    }
 }
 
 fun Intent.startActivity(fragment: Fragment) {
-    fragment.startActivity(this)
+    try {
+        fragment.startActivity(this)
+    } catch (e: Exception) {
+    }
 }
 
 fun Intent.startActivityForResult(activity: AppCompatActivity, requestCode: Int) {
-    activity.startActivityForResult(this, requestCode)
+    try {
+        activity.startActivityForResult(this, requestCode)
+    } catch (e: Exception) {
+    }
 }
 
 fun Intent.startActivityForResult(fragment: Fragment, requestCode: Int) {
-    fragment.startActivityForResult(this, requestCode)
+    try {
+        fragment.startActivityForResult(this, requestCode)
+    } catch (e: Exception) {
+    }
 }
 
 fun EditText.delayTextChangeListener(delay: Long, func: (char: CharSequence) -> Unit) {

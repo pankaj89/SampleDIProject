@@ -11,7 +11,7 @@ const val DATE_FORMAT_FILE = "dd/MM/yyyy HH:mm"
 const val TIME_FORMAT_INPUT = "HH:mm"
 const val TIME_FORMAT_OUTPUT = "hh:mm a"
 
-fun String.getFormatedDate(
+fun String?.getFormatedDate(
     inputFormat: String = DATE_FORMAT_INPUT,
     outputFormat: String = DATE_FORMAT_OUTPUT
 ): String {
@@ -26,7 +26,18 @@ fun String.getFormatedDate(
         val inputDate = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
         SimpleDateFormat(outFormat, Locale.getDefault()).format(inputDate)
     } catch (e: Exception) {
-        this
+        this ?: ""
+    }
+}
+
+fun String?.getTimestamp(
+    inputFormat: String = DATE_FORMAT_INPUT
+): Long {
+    return try {
+        val date = SimpleDateFormat(inputFormat, Locale.getDefault()).parse(this)
+        date.time
+    } catch (e: Exception) {
+        System.currentTimeMillis()
     }
 }
 
