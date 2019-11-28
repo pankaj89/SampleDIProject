@@ -583,7 +583,7 @@ fun String.toformatedValue(): String {
 
 fun String.doubleValueToformatedWithZero(): String {
     try {
-        return DecimalFormat("###,##0.00").format(this.toDouble())
+        return DecimalFormat("###,##0.00").format(this.stringIfBlank("0").toDouble())
     } catch (e: Exception) {
         return this
     }

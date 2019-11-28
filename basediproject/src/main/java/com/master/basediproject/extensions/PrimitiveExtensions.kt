@@ -1,10 +1,13 @@
 package com.master.basediproject.extensions
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.annotation.ColorInt
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import java.lang.Exception
 import java.math.BigDecimal
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -113,6 +116,16 @@ fun Boolean.parseString(): String {
         "Yes"
     } else
         "No"
+}
+
+fun String?.parseColor(@ColorInt defaultColor: Int = 0): Int {
+
+    try{
+        return Color.parseColor(this)
+    }
+    catch (e:Exception){
+        return defaultColor
+    }
 }
 
 fun String?.parseInt(defaultVal: Int = 0): Int {

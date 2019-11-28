@@ -59,6 +59,17 @@ class FilePickerActivity : AppCompatActivity() {
         }
     }
 
+    private val mimeTypes = arrayOf(
+        /*DOC,
+        DOCX,
+        PPT,
+        PPTX,
+        XLS,
+        XLSX,
+        TEXT,*/
+        PDF
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_file_picker)
@@ -143,25 +154,32 @@ class FilePickerActivity : AppCompatActivity() {
 
     fun walk(root: File): ArrayList<FilesData> {
 
-        val listFile = root.listFiles()
+        val listFile = root.listFiles { dir, name ->
+            val file = File(dir, name)
+            if (!file.isDirectory) {
+                val mimeType = file.absoluteFile?.absolutePath?.getMimeType("*/*")
+                mimeTypes.contains(mimeType)
+            } else {
+                file.absoluteFile?.absolutePath?.isNotEmpty() == true
+            }
+        }.toCollection(ArrayList())
 
-        if (listFile != null && listFile.isNotEmpty()) {
+        val datadir = filePaths.getLocalDirectory(type = TYPES.PUBLIC_CACHE_DIRECTORY)?.path ?: ""
+
+        datadir.substring(datadir.lastIndexOf("data/") + 1, datadir.length)
+
+        val file: File? = listFile.find {
+            it.path == datadir.substring(0, datadir.lastIndexOf("/data/"))
+        }
+        listFile.remove(file)
+
+        if (listFile.isNotEmpty()) {
             for (f in listFile) {
                 if (f.isDirectory) {
-                    Timber.d("Dir: %s", f.absoluteFile)
+//                    Timber.d("Dir: %s", f.absolutePath)
                     walk(f)
                 } else {
-                    Timber.d("File: %s", f.absoluteFile)
-                    val mimeTypes = arrayOf(
-                        DOC,
-                        DOCX,
-                        PPT,
-                        PPTX,
-                        XLS,
-                        XLSX,
-                        TEXT,
-                        PDF
-                    )
+//                    Log.d("File: %s", f.absolutePath)
                     val mimeType = f.absoluteFile.absolutePath.getMimeType("*/*")
                     if (mimeTypes.contains(mimeType)) {
                         list.add(
