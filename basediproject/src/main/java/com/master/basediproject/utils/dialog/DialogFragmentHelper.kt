@@ -3,10 +3,7 @@ package com.master.basediproject.utils.dialog
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
@@ -27,7 +24,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
             isAnimationRequire: Boolean = true,
             isCancellable: Boolean = true,
             isCancellableOnTouchOutSide: Boolean = true,
-            forceKeyboardOpen:Boolean = false,
+            forceKeyboardOpen: Boolean = false,
             onStartCallback: ((bottomSheetDialogFragment: DialogFragment) -> Unit)? = null,
             viewCreatedCallback: (binding: B, dialogFragment: DialogFragment) -> Unit
         ): androidx.fragment.app.DialogFragment {
@@ -67,6 +64,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.setCanceledOnTouchOutside(
             arguments?.getBoolean("IS_CANCELLABLE_ON_TOUCH_OUTSIDE")
                 ?: true
@@ -79,7 +77,7 @@ class DialogFragmentHelper<B : ViewDataBinding> : androidx.fragment.app.DialogFr
 
         val isKeyboardOpen = arguments?.getBoolean("IS_KEYBOARD_OPEN") ?: true
 
-        if(isKeyboardOpen){
+        if (isKeyboardOpen) {
             dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
     }

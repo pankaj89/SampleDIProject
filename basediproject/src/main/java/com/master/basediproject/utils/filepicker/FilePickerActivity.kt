@@ -150,6 +150,10 @@ class FilePickerActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     fun walk(root: File): ArrayList<FilesData> {
