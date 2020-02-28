@@ -7,7 +7,6 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
 import com.master.basediproject.R
-import com.master.basediproject.extensions.markRequiredInColor
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -15,8 +14,7 @@ import java.util.regex.Pattern
 class ValidationHelper(
     private var anim: Animation? = null,
     context: Context,
-    val putStarInRequired: Boolean = false,
-    val starColor: Int = Color.RED
+    val putStarInRequired: Boolean = false
 ) {
 
     init {
@@ -40,8 +38,7 @@ class ValidationHelper(
             )
         )
         if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
-//            textInputLayout.hint = textInputLayout.hint.toString() + "*"
-            textInputLayout.markRequiredInColor(starColor)
+            textInputLayout.hint = textInputLayout.hint.toString() + "*"
     }
 
     fun addCustomLogicValidation(customLogicValidation: CustomLogicValidation) {
@@ -57,8 +54,7 @@ class ValidationHelper(
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
 
         if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
-//            editText.hint = editText.hint.toString() + "*"
-            editText.markRequiredInColor(starColor)
+            editText.hint = editText.hint.toString() + "*"
     }
 
 
@@ -80,8 +76,7 @@ class ValidationHelper(
                 )
             )
             if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
-//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
-                textInputLayout.markRequiredInColor(starColor)
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
 
         }
         validationList.add(
@@ -104,8 +99,7 @@ class ValidationHelper(
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
             if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
-//                editText.hint = editText.hint.toString() + "*"
-                editText.markRequiredInColor(starColor)
+                editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -137,8 +131,7 @@ class ValidationHelper(
                 )
             )
             if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
-//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
-                textInputLayout.markRequiredInColor(starColor)
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -166,8 +159,7 @@ class ValidationHelper(
                 )
             )
             if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
-//                editText.hint = editText.hint.toString() + "*"
-                editText.markRequiredInColor(starColor)
+                editText.hint = editText.hint.toString() + "*"
         }
         validationList.add(
             ValidationModel(
@@ -196,8 +188,7 @@ class ValidationHelper(
                 )
             )
             if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
-//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
-                textInputLayout.markRequiredInColor(starColor)
+                textInputLayout.hint = textInputLayout.hint.toString() + "*"
         }
         if (isStrong)
             validationList.add(
@@ -219,8 +210,7 @@ class ValidationHelper(
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankPasswordMsg))
             if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
-//                editText.hint = editText.hint.toString() + "*"
-                editText.markRequiredInColor(starColor)
+                editText.hint = editText.hint.toString() + "*"
         }
         if (isStrong)
             validationList.add(

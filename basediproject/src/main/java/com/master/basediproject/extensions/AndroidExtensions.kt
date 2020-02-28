@@ -128,7 +128,7 @@ fun View.hideKeyBoard() {
 
 fun Context.getJobScheduler(): JobScheduler? {
     var jobScheduler: JobScheduler? = null
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+    if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
         jobScheduler = getSystemService(JobScheduler::class.java)
     } else {
         jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
@@ -468,7 +468,7 @@ fun EditText.onRightDrawableClickListener(threshHold: Int = 0, func: () -> Unit)
 @Suppress("DEPRECATION")
 fun String.getHtmlFormattedText(): Spanned {
     val result: Spanned =
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
         } else {
             Html.fromHtml(this)
@@ -641,18 +641,4 @@ internal fun View?.findSuitableParent(): ViewGroup? {
 
     // If we reach here then we didn't find a CoL or a suitable content view so we'll fallback
     return fallback
-}
-
-fun TextInputLayout.markRequiredInColor(color: Int) {
-    hint = buildSpannedString {
-        append(hint)
-        color(color) { append(" *") } // Mind the space prefix.
-    }
-}
-
-fun EditText.markRequiredInColor(color: Int) {
-    hint = buildSpannedString {
-        append(hint)
-        color(color) { append(" *") } // Mind the space prefix.
-    }
 }

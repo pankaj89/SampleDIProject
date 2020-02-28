@@ -16,6 +16,7 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
     var viewCreatedCallback: ((binding: B, dialogFragment: BottomSheetDialogFragment) -> Unit)? =
         null
     var onStartCallback: ((bottomSheetDialogFragment: BottomSheetDialogFragment) -> Unit)? = null
+    var onCreateCallback: ((bottomSheetDialogFragment: BottomSheetDialogFragment) -> Unit)? = null
 
     companion object {
         fun <B : ViewDataBinding> with(
@@ -24,8 +25,8 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
             isCancellable: Boolean = true,
             isCancellableOnTouchOutSide: Boolean = true,
             onStartCallback: ((bottomSheetDialogFragment: BottomSheetDialogFragment) -> Unit)? = null,
+            onCreateCallback: ((bottomSheetDialogFragment: BottomSheetDialogFragment) -> Unit)? = null,
             viewCreatedCallback: (binding: B, dialogFragment: BottomSheetDialogFragment) -> Unit
-
         ): androidx.fragment.app.DialogFragment {
             val dialog = BottomSheetDialogFragmentHelper<B>().apply {
                 arguments = Bundle().apply {
@@ -38,6 +39,7 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
             dialog.isCancelable = isCancellable
             dialog.viewCreatedCallback = viewCreatedCallback
             dialog.onStartCallback = onStartCallback
+            dialog.onCreateCallback = onCreateCallback
             return dialog
         }
     }
@@ -62,6 +64,7 @@ class BottomSheetDialogFragmentHelper<B : ViewDataBinding> : BottomSheetDialogFr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogThemeNoFloating)
+        onCreateCallback?.invoke(this)
     }
 
     override fun onStart() {

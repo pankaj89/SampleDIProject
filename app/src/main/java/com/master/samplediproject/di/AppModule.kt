@@ -42,7 +42,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideValidationHelper(anim: Animation): ValidationHelper = ValidationHelper(anim)
+    fun provideValidationHelper(anim: Animation,context: Context): ValidationHelper = ValidationHelper(anim,context,putStarInRequired = true)
 
     @Singleton
     @Provides
