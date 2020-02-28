@@ -8,7 +8,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.master.basediproject.extensions.showKeyBoard
 import com.master.basediproject.extensions.showKeyBoard
 
-class Validator(private val anim: Animation) {
+class Validator(private val anim: Animation?) {
 
     /**
      * Pattern validator for text input layout

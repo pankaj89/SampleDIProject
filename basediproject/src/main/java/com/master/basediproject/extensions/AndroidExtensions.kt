@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.res.AssetManager
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.net.Uri
@@ -17,20 +18,19 @@ import android.text.Html
 import android.text.Spanned
 import android.util.StateSet
 import android.util.TypedValue
-import android.view.MotionEvent
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.webkit.WebView
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -344,7 +344,7 @@ fun Fragment.share(text: String, appName: Array<String>? = null): Boolean {
 }
 
 fun String.toStringPart(): RequestBody {
-    return RequestBody.create(MediaType.parse("text/plain"), if (this == null) "" else this)
+    return RequestBody.create(MediaType.parse("text/plain"), this)
 }
 
 //fun String.toMultibodyFilePart(key: String, mimeType: String = "image/*"): MultipartBody.Part {
@@ -614,3 +614,45 @@ fun String.getFileName(): String {
     return this.substring(this.lastIndexOf("/") + 1, this.length)
 }
 
+internal fun View?.findSuitableParent(): ViewGroup? {
+    var view = this
+    var fallback: ViewGroup? = null
+    do {
+        if (view is CoordinatorLayout) {
+            // We've found a CoordinatorLayout, use it
+            return view
+        } else if (view is FrameLayout) {
+            if (view.id == android.R.id.content) {
+                // If we've hit the decor content view, then we didn't find a CoL in the
+                // hierarchy, so use it.
+                return view
+            } else {
+                // It's not the content view but we'll use it as our fallback
+                fallback = view
+            }
+        }
+
+        if (view != null) {
+            // Else, we will loop and crawl up the view hierarchy and try to find a parent
+            val parent = view.parent
+            view = if (parent is View) parent else null
+        }
+    } while (view != null)
+
+    // If we reach here then we didn't find a CoL or a suitable content view so we'll fallback
+    return fallback
+}
+
+fun TextInputLayout.markRequiredInColor(color: Int) {
+    hint = buildSpannedString {
+        append(hint)
+        color(color) { append(" *") } // Mind the space prefix.
+    }
+}
+
+fun EditText.markRequiredInColor(color: Int) {
+    hint = buildSpannedString {
+        append(hint)
+        color(color) { append(" *") } // Mind the space prefix.
+    }
+}

@@ -1,13 +1,29 @@
 package com.master.basediproject.utils.validation
 
+import android.content.Context
+import android.graphics.Color
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
+import com.master.basediproject.R
+import com.master.basediproject.extensions.markRequiredInColor
 import timber.log.Timber
 import java.util.regex.Pattern
 
 
-class ValidationHelper(anim: Animation) {
+class ValidationHelper(
+    private var anim: Animation? = null,
+    context: Context,
+    val putStarInRequired: Boolean = false,
+    val starColor: Int = Color.RED
+) {
+
+    init {
+        if (anim == null) {
+            anim = AnimationUtils.loadAnimation(context, R.anim.shake_anim)
+        }
+    }
 
     private val validator by lazy { Validator(anim) }
     private val validationList: ArrayList<ValidationModel> = ArrayList()
@@ -23,8 +39,9 @@ class ValidationHelper(anim: Animation) {
                 mErrMsg = blankMsg
             )
         )
-        if (!textInputLayout.hint.toString().trim().endsWith("*"))
-            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+        if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
+//            textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            textInputLayout.markRequiredInColor(starColor)
     }
 
     fun addCustomLogicValidation(customLogicValidation: CustomLogicValidation) {
@@ -39,8 +56,9 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankMsg))
 
-        if (!editText.hint.toString().trim().endsWith("*"))
-            editText.hint = editText.hint.toString() + "*"
+        if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
+//            editText.hint = editText.hint.toString() + "*"
+            editText.markRequiredInColor(starColor)
     }
 
 
@@ -61,8 +79,10 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankEmailMsg
                 )
             )
-            if (!textInputLayout.hint.toString().trim().endsWith("*"))
-                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
+//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+                textInputLayout.markRequiredInColor(starColor)
+
         }
         validationList.add(
             ValidationModel(
@@ -83,8 +103,9 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankEmailMsg))
-            if (!editText.hint.toString().trim().endsWith("*"))
-                editText.hint = editText.hint.toString() + "*"
+            if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
+//                editText.hint = editText.hint.toString() + "*"
+                editText.markRequiredInColor(starColor)
         }
         validationList.add(
             ValidationModel(
@@ -115,8 +136,9 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
-            if (!textInputLayout.hint.toString().trim().endsWith("*"))
-                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
+//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+                textInputLayout.markRequiredInColor(starColor)
         }
         validationList.add(
             ValidationModel(
@@ -143,8 +165,9 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankMobileNumberMsg
                 )
             )
-            if (!editText.hint.toString().trim().endsWith("*"))
-                editText.hint = editText.hint.toString() + "*"
+            if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
+//                editText.hint = editText.hint.toString() + "*"
+                editText.markRequiredInColor(starColor)
         }
         validationList.add(
             ValidationModel(
@@ -172,8 +195,9 @@ class ValidationHelper(anim: Animation) {
                     mErrMsg = blankPasswordMsg
                 )
             )
-            if (!textInputLayout.hint.toString().trim().endsWith("*"))
-                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+            if (putStarInRequired && !textInputLayout.hint.toString().trim().endsWith("*"))
+//                textInputLayout.hint = textInputLayout.hint.toString() + "*"
+                textInputLayout.markRequiredInColor(starColor)
         }
         if (isStrong)
             validationList.add(
@@ -194,8 +218,9 @@ class ValidationHelper(anim: Animation) {
         validator.errorRemoveOnChange(editText)
         if (isRequired) {
             validationList.add(ValidationModel(mEditText = editText, mErrMsg = blankPasswordMsg))
-            if (!editText.hint.toString().trim().endsWith("*"))
-                editText.hint = editText.hint.toString() + "*"
+            if (putStarInRequired && !editText.hint.toString().trim().endsWith("*"))
+//                editText.hint = editText.hint.toString() + "*"
+                editText.markRequiredInColor(starColor)
         }
         if (isStrong)
             validationList.add(
