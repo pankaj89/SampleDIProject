@@ -18,7 +18,7 @@ class Validator(private val anim: Animation?) {
             return true
         }
         val pattern = model.mPattern
-        val matcher = pattern?.matcher(model.mTextInputLayout?.editText?.text.toString())
+        val matcher = pattern?.matcher(model.mTextInputLayout?.editText?.text.toString().trim())
         if (matcher?.matches() == false) {
             model.mTextInputLayout?.error = model.mErrMsg
             model.mTextInputLayout?.startAnimation(anim)
@@ -49,7 +49,7 @@ class Validator(private val anim: Animation?) {
             return true
         }
         val pattern = model.mPattern
-        val matcher = pattern?.matcher(model.mEditText?.text.toString())
+        val matcher = pattern?.matcher(model.mEditText?.text.toString().trim())
         if (matcher?.matches() == false) {
             model.mEditText?.error = model.mErrMsg
             model.mEditText?.startAnimation(anim)
