@@ -20,9 +20,9 @@ import android.content.Context
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.google.gson.Gson
-import com.master.basediproject.utils.validation.ValidationHelper
 import com.master.samplediproject.R
 import com.master.samplediproject.utils.Pref
+import com.master.validationhelper.ValidationHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

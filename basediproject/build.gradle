@@ -25,7 +25,7 @@ android {
         }
     }
 
-    dataBinding{
+    dataBinding {
         enabled true
     }
 }
@@ -81,6 +81,9 @@ dependencies {
     //PermissionHelper
     api 'com.master.android:permissionhelper:2.1'
     api 'com.master.android:simpleadapter:3.2'
+
+    //Validation Helper
+    api 'com.github.bhoomit11:ValidationHelper:1.0.2'
 
     //Glide
     api 'com.github.bumptech.glide:glide:4.9.0'
