@@ -455,7 +455,7 @@ fun EditText.onRightDrawableClickListener(threshHold: Int = 0, func: () -> Unit)
 
         if (event.action == MotionEvent.ACTION_DOWN) {
             val bound = this.compoundDrawables[DRAWABLE_RIGHT]
-            if (event.rawX > this.right - (bound?.bounds?.width() ?: 0) + threshHold) {
+            if (event.rawX > this.right - (bound?.bounds?.width() ?: 0) - threshHold) {
                 func()
                 return@OnTouchListener true
             }
