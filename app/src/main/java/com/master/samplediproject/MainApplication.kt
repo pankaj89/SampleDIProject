@@ -16,7 +16,7 @@
 
 package com.master.samplediproject
 
-import com.example.daggerandroidapp.ws.HeaderInterceptor
+import com.master.samplediproject.ws.HeaderInterceptor
 import com.master.basediproject.BaseDaggerApplication
 import com.master.samplediproject.di.DaggerAppComponent
 import dagger.android.AndroidInjector

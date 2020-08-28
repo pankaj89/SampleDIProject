@@ -17,8 +17,8 @@
 package com.master.samplediproject.di
 
 import android.content.Context
-import com.example.daggerandroidapp.ws.HeaderInterceptor
-import com.example.daggerandroidapp.ws.WSModule
+import com.master.samplediproject.ws.HeaderInterceptor
+import com.master.samplediproject.ws.WSModule
 import com.master.basediproject.dihelpers.ViewModelModule
 import com.master.basediproject.dihelpers.module.BaseAppModule
 import com.master.samplediproject.MainApplication

@@ -1,8 +1,7 @@
-package com.example.daggerandroidapp.ws
+package com.master.samplediproject.ws
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.master.samplediproject.BuildConfig
-import com.master.samplediproject.ws.WebService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -62,7 +61,7 @@ abstract class HeaderInterceptor : Interceptor {
         for (stringStringEntry in getHeaders().entries) {
             builder1.header(stringStringEntry.key, stringStringEntry.value)
         }
-        builder1.method(original.method(), original.body())
+        builder1.method(original.method, original.body)
         val request = builder1.build()
         return chain.proceed(request)
     }

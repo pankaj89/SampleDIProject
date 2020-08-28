@@ -304,5 +304,5 @@ fun JSONObject.getAlternateString(key: String, vararg alternates: String): Strin
 }
 
 fun <T> Iterable<T>?.getCSVString(func: (T) -> String?): String {
-    return TextUtils.join(",", this?.map(func))
+    return TextUtils.join(",", this?.map(func).toArrayList())
 }

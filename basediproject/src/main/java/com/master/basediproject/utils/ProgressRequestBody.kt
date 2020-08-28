@@ -3,6 +3,7 @@ package com.master.basediproject.utils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okio.BufferedSink
 import java.io.File
@@ -36,7 +37,7 @@ class ProgressRequestBody : RequestBody {
 
 
     override fun contentType(): MediaType? {
-        return MediaType.parse("video/mp4")
+        return "video/mp4".toMediaTypeOrNull()
     }
 
     @Throws(IOException::class)

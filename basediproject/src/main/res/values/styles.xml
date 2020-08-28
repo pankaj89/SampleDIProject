@@ -14,7 +14,7 @@
 
     </style>
 
-    <style name="ImagePreviewFullScreen" parent="Theme.AppCompat.NoActionBar">
+      <style name="ImagePreviewFullScreen" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/crop_statusbar_color</item>
         <item name="colorPrimaryDark">@color/crop_statusbar_color</item>

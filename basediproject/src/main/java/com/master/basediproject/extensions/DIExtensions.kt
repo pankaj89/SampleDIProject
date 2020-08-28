@@ -116,13 +116,13 @@ inline fun <reified VM : ViewModel> Fragment.parentViewModelProvider(
 fun <T : Enum<T>> Parcel.writeEnum(value: T) = writeString(value.name)
 
 /** Read an enum value from a Parcel */
-inline fun <reified T : Enum<T>> Parcel.readEnum(): T = enumValueOf(readString())
+inline fun <reified T : Enum<T>> Parcel.readEnum(): T = enumValueOf(readString()?:"")
 
 /** Write an enum value to a Bundle */
 fun <T : Enum<T>> Bundle.putEnum(key: String, value: T) = putString(key, value.name)
 
 /** Read an enum value from a Bundle */
-inline fun <reified T : Enum<T>> Bundle.getEnum(key: String): T = enumValueOf(getString(key))
+inline fun <reified T : Enum<T>> Bundle.getEnum(key: String): T = enumValueOf(getString(key)?:"")
 
 /** Write a boolean to a Parcel (copied from Parcel, where this is @hidden). */
 fun Parcel.writeBoolean(value: Boolean) = writeInt(if (value) 1 else 0)

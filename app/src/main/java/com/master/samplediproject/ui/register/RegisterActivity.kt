@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.master.basediproject.dihelpers.DIViewModelFactory
 import com.master.basediproject.extensions.loadImage
 import com.master.basediproject.extensions.startActivity
-import com.master.basediproject.extensions.toMultibodyFilePart
 import com.master.basediproject.extensions.viewModelProvider
 import com.master.basediproject.utils.MediaPicker
 import com.master.basediproject.utils.imageviewer.ImagePreviewActivity

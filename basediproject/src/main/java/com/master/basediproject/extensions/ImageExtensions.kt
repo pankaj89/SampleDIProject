@@ -33,7 +33,7 @@ fun ImageView.loadImageWithCircle(url: String?, placeHolder: Int = -1) {
     }
 }
 
-fun ImageView.loadImageWithRoundedCorner(url: String?, placeHolder: Int = -1, radius: Int = 0) {
+fun ImageView.loadImageWithRoundedCorner(url: String?, placeHolder: Int = -1, radius: Int) {
 
 //    url.ifNotBlank {
     val requestManager = Glide.with(this).load(url).transform(MultiTransformation(CenterCrop(), RoundedCorners(radius)))

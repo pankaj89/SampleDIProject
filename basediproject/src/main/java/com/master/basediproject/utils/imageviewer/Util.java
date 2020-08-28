@@ -84,7 +84,7 @@ public class Util {
 
     private static File getWorkingDirectory() {
         File directory =
-                new File(Environment.getExternalStorageDirectory(), BuildConfig.APPLICATION_ID);
+                new File(Environment.getExternalStorageDirectory(), BuildConfig.LIBRARY_PACKAGE_NAME);
         if (!directory.exists()) {
             directory.mkdir();
         }

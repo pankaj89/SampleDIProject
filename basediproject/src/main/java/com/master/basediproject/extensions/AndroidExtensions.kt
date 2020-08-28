@@ -1,5 +1,6 @@
 package com.master.basediproject.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.job.JobScheduler
 import android.content.ActivityNotFoundException
@@ -39,8 +40,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.InputStream
 import java.io.Serializable
@@ -344,7 +348,7 @@ fun Fragment.share(text: String, appName: Array<String>? = null): Boolean {
 }
 
 fun String.toStringPart(): RequestBody {
-    return RequestBody.create(MediaType.parse("text/plain"), this)
+    return this.toRequestBody("text/plain".toMediaTypeOrNull())
 }
 
 //fun String.toMultibodyFilePart(key: String, mimeType: String = "image/*"): MultipartBody.Part {
@@ -353,17 +357,17 @@ fun String.toStringPart(): RequestBody {
 //    return MultipartBody.Part.createFormData(key, file.name, filebody)
 //}
 
-fun String.toMultibodyFilePart(key: String, mimeType: String = ""): MultipartBody.Part {
+fun String.toMultiBodyFilePart(key: String, mimeType: String = ""): MultipartBody.Part {
     val file = File(this)
-    val actualMimeType = mimeType.stringIfBlank(this.getMimeType("image/*"))
-    val filebody = RequestBody.create(MediaType.parse(actualMimeType), file)
-    return MultipartBody.Part.createFormData(key, file.getName(), filebody)
+    val actualMimeType = mimeType.stringIfBlank(this.getMimeType())
+    val fileBody = file.asRequestBody(actualMimeType.toMediaTypeOrNull())
+    return MultipartBody.Part.createFormData(key, file.name, fileBody)
 }
 
-fun String.getMimeType(defaultMimeType: String): String {
+fun String?.getMimeType(defaultMimeType: String = "image/*"): String {
     var type: String = defaultMimeType
     try {
-        val extension = MimeTypeMap.getFileExtensionFromUrl(this.toLowerCase()).toLowerCase()
+        val extension = MimeTypeMap.getFileExtensionFromUrl(this?.toLowerCase()).toLowerCase()
         if (extension != null) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: defaultMimeType
         }
@@ -373,6 +377,7 @@ fun String.getMimeType(defaultMimeType: String): String {
     return type
 }
 
+@SuppressLint("CheckResult")
 fun String.toProgressFilePart(callback: (percentage: Float) -> Unit): ProgressRequestBody {
     val videoPart = ProgressRequestBody(File(this))
     videoPart.getProgressSubject()
